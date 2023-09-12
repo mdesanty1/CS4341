@@ -63,12 +63,12 @@ class Game:
 
             current_marker = self.markers[self.current_player]
             if self.current_player == 0:
-
+                #Likely put other file here
                 selected_move = self.f_p1(self.board,
                                           self.names[1], self.names[0], self.pass_or_go)
 
             else:
-
+                #Likely put other file here
                 selected_move = self.f_p2(self.board,
                                           self.names[0], self.names[1], self.pass_or_go)
 

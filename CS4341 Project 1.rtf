@@ -1,51 +1,41 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2709
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-{\*\expandedcolortbl;;}
-\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+10 dots, 9 edges
 
-\f0\fs24 \cf0 10 dots, 9 edges\
-\
-Each dot is a digit between 0-9, ex: (0,3), (4,5), (7,1) (2d array?)\
-\
-Edge is denoted by a pair of dots, ex: ((0,3),(1,3)) (an illegal move is an edge created by two dots that aren\'92t adjacent or trying to create an edge that is already created)\
-\
-Each box is a point, when a box is a closed player moves again\
-\
-Referee decides who goes first (player1 is who goes first, player2 is who goes second)\
-\
-Time-limit = 10 seconds (for now)\
-\
-Move is denoted as ((a,b),(c,d))\
-\
-Move pre-conditions: a,b,c,d all between 0 and 9, (a,b) and (c,d) are adjacent dots, and edge is available (not captured)\
-\
-Move post-conditions: edge is marked as captured by player who made the move, if the move closes a box then it is marked as captured by the player and the player gets another turn and must play again, otherwise it\'92s the next person\'92s turn\
-\
-Game ends if: all edges and boxes are captured (player with most boxes wins, if same number boxes, draw), player makes an illegal move, player fails to make a move within time limit\
-\
-Must use minimax algorithm with alpha-beta pruning\
-\
-Use a utility function (a function that given a terminal board configuration returns the number of points won by the current player. Obvious choice: use the number of boxes your player captured)\
-\
-Program will most likely need to use a game strategy (use an evaluation function to evaluate non-terminal board configurations, must coincide with utility function. Implement heuristics to decide which nodes to continue expanding and which to not expand further (?). \
-\
-Must report invalid moves by opponent and state why\
-\
-Must detect if the game is over and print a message stating who won\
-\
-Program has to check to see if an \'93end_game\'94 file exists (if file exists, game is over and file contain result of game)\
-\
-If \'93end_game\'94 doesn\'92t exist then the program should check \'93move_file\'94 to read opponent\'92s move (if it is empty, the player has the first move), pick its own move and overwrite move_file with its own move\
-\
+Each dot is a digit between 0-9, ex: (0,3), (4,5), (7,1) (2d array?)
+
+Edge is denoted by a pair of dots, ex: ((0,3),(1,3)) (an illegal move is an edge created by two dots that aren\'92t adjacent or trying to create an edge that is already created)
+
+Each box is a point, when a box is a closed player moves again
+
+Referee decides who goes first (player1 is who goes first, player2 is who goes second)
+
+Time-limit = 10 seconds (for now)
+
+Move is denoted as ((a,b),(c,d))
+
+Move pre-conditions: a,b,c,d all between 0 and 9, (a,b) and (c,d) are adjacent dots, and edge is available (not captured)
+
+Move post-conditions: edge is marked as captured by player who made the move, if the move closes a box then it is marked as captured by the player and the player gets another turn and must play again, otherwise it's the next person's turn
+
+Game ends if: all edges and boxes are captured (player with most boxes wins, if same number boxes, draw), player makes an illegal move, player fails to make a move within time limit
+
+Must use minimax algorithm with alpha-beta pruning
+
+Use a utility function (a function that given a terminal board configuration returns the number of points won by the current player. Obvious choice: use the number of boxes your player captured)
+
+Program will most likely need to use a game strategy (use an evaluation function to evaluate non-terminal board configurations, must coincide with utility function. Implement heuristics to decide which nodes to continue expanding and which to not expand further (?). 
+
+Must report invalid moves by opponent and state why
+
+Must detect if the game is over and print a message stating who won
+
+Program has to check to see if an "end_game" file exists (if file exists, game is over and file contain result of game)
+
+If "end_game" doesn't exist then the program should check "move_file" to read opponent's move (if it is empty, the player has the first move), pick its own move and overwrite move_file with its own move
+
 Player needs to open the file for writing, write the move and close the file all in one concise operation to ensure the referee reads in what the player means\
-\
-When \'93group name.pass\'94 appears, program must read the opponent\'92s move from \'93move_file\'94, overwrite the \'93move_file\'94 with the fake move \'93<groupname> 0,0 0,0\'94 to signal to the referee that it understands that the opponent has an extra turn and hence it has to \'93pass\'94 for now until its turn to play\
-\
-Pass-time-limit = 2 seconds\
-\
-When \'93groupname.go\'94 and \'93groupname.pass\'94 are absent in the directory, player should wait until one of the two files appears and do nothing else in the meantime\
-\
-\
-}
+
+When "group name.pass" appears, program must read the opponent's move from "move_file", overwrite the "move_file" with the fake move "<groupname> 0,0 0,0" to signal to the referee that it understands that the opponent has an extra turn and hence it has to "pass" for now until its turn to play
+
+Pass-time-limit = 2 seconds
+
+When "groupname.go" and "groupname.pass" are absent in the directory, player should wait until one of the two files appears and do nothing else in the meantime

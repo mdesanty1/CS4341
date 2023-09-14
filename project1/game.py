@@ -6,7 +6,7 @@ import display as disp
 from dotsandboxes import generateEdges
 from external_players import external_player
 #Import groupname file to run within this file
-#from groupname import GroupName
+from groupname import GroupName
 
 # Each AI function will have its own file to allow for more modular creation
 import human
@@ -65,15 +65,10 @@ class Game:
 
             current_marker = self.markers[self.current_player]
             if self.current_player == 0:
-                #Likely put other file here
-                #Define variables to put in function
-                #GroupName.run(self.board)
                 selected_move = self.f_p1(self.board,
                                           self.names[1], self.names[0], self.pass_or_go)
 
             else:
-                #Likely put other file here
-                #GroupName.run(self.board)
                 selected_move = self.f_p2(self.board,
                                           self.names[0], self.names[1], self.pass_or_go)
 
@@ -86,6 +81,8 @@ class Game:
                 int(c2)
 
                 move = selected_move
+                #Passes in the last move made
+                GroupName.decideMove(self.board, move)
 
             except TypeError:
 

@@ -30,7 +30,7 @@ def nums_output(nums, p1_name, p2_name):
 
 
 class Game:
-    def __init__(self, f_p1, f_p2, p1_name=None, p2_name=None, rand_start=False):
+    def __init__(self, r1, c1, r2, c2, listOfMoves, f_p1, f_p2, p1_name=None, p2_name=None, rand_start=False):
         self.names = [gp.PLAYER0_MARKER if p1_name is None else p1_name,
                       gp.PLAYER1_MARKER if p2_name is None else p2_name]
         self.f_p1 = f_p1
@@ -41,6 +41,14 @@ class Game:
         self.completed_squares = []
         self.moves = 0
         self.pass_or_go = False
+        #Define coordinates globally so we can access them in main AI file
+        self.r1 = 0
+        self.c1 = 0
+        self.r2 = 0
+        self.c2 = 1
+        #Create empty list of moves to show the edges
+        self.listOfMoves = []
+
     
         # Allows to easily change players and markers
         self.current_player = 0
@@ -80,9 +88,11 @@ class Game:
                 int(r2)
                 int(c2)
 
-                move = selected_move
-                #Passes in the last move made
-                GroupName.decideMove(self.board, move)
+                self.move = selected_move
+                #append move to list of moves
+                self.listOfMoves.append(self.move)
+                #Passes in the last move made and the list of current moves made
+                GroupName.decideMove(self.board, self.move, self.listOfMoves)
 
             except TypeError:
 

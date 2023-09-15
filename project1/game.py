@@ -6,7 +6,7 @@ import display as disp
 from dotsandboxes import generateEdges
 from external_players import external_player
 #Import groupname file to run within this file
-from groupname import GroupName
+from MandM import mandm
 
 # Each AI function will have its own file to allow for more modular creation
 import human
@@ -92,7 +92,7 @@ class Game:
                 #append move to list of moves
                 self.listOfMoves.append(self.move)
                 #Passes in the last move made and the list of current moves made
-                GroupName.decideMove(self.board, self.move, self.listOfMoves)
+                mandm.decideMove(self.board, self.move, self.listOfMoves)
 
             except TypeError:
 

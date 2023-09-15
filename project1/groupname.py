@@ -24,6 +24,26 @@ class GroupName:
         #myList.append(((1,2), (2,1)))
         updateBoard(move)
 
+        #Minimax algo:
+        #Explore all options -> store the number of boxes each route captures
+        #Starting condition: choose nearest node that does not have 2 lines branching off it
+            #ideal: follow your own line
+        #Once one node has 2 lines branching off it:
+            #Look at array of nodes not taken from left to right
+            #If the next route explored captures less than the previous ones, prune
+            #Tree: start node, 8!, 7!, 6!,...
+            #Use iterative deepening: only check the next move after to see if there is a better move
+            #"better move" = less lines connected to that node
+            #When the algo comes to a node, check horizontal options first then vertical (MUST CHECK BOTH) 
+                #Add and subtract 1 to the y value
+                #Handle out of bounds: if <0 or >board size
+                #Check horizontal and verticals at the node first to determine best move in that moment then have the computer check what the next move would be
+                #Ties: pick the first option (horizontal or vertical) in queue
+            #Would need to check how many lines are connected to current node and node next to it
+            #If box is closed, that player gets to go again
+
+
+
     #Update board based on AI's last move
     def updateBoard(move):
         #File_object.write("Chosen move \n")

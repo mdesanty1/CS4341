@@ -30,7 +30,7 @@ def nums_output(nums, p1_name, p2_name):
 
 
 class Game:
-    def __init__(self, r1, c1, r2, c2, listOfMoves, f_p1, f_p2, p1_name=None, p2_name=None, rand_start=False):
+    def __init__(self, r1, c1, r2, c2, listOfMoves, cordEdges, f_p1, f_p2, p1_name=None, p2_name=None, rand_start=False):
         self.names = [gp.PLAYER0_MARKER if p1_name is None else p1_name,
                       gp.PLAYER1_MARKER if p2_name is None else p2_name]
         self.f_p1 = f_p1
@@ -54,6 +54,9 @@ class Game:
         for x in range(0,8):
             for y in range(0,8):
                 boardCords[x][y] = [x,y]
+        #Initialize 9x9 that tells you how many edges are at the corresponding coordinate
+        #Initialized to all zeros to start the game
+        self.cordEdges = np.zeros(9,9)
 
 
     
@@ -94,12 +97,15 @@ class Game:
                 int(c1)
                 int(r2)
                 int(c2)
-                #print(self.board)
+                #add an edge to the selected move
                 self.move = selected_move
                 #append move to list of moves
                 self.listOfMoves.append(self.move)
-                #Passes in the last move made and the list of current moves made
-                mandm.decideMove(self.board, self.move, self.listOfMoves)
+                #Add an edge to those coordinates
+                self.cordEdges[r1][c1] = self.cordEdges[r1][c1] + 1
+                self.cordEdges[r2][c2] = self.cordEdges[r2][c2] + 1
+                #Passes in the board coordinates, last move made, list of current moves, and list of number of edges at each coordinate
+                mandm.decideMove(self.boardCords, self.move, self.listOfMoves, self.cordEdges)
 
             except TypeError:
 

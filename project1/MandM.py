@@ -7,7 +7,11 @@ class GroupName:
     #def __init__(self):
 
     #Takes in current board and last move
-    def decideMove(board, lastMove, listOfMoves):
+    #board = 9x9 of board coordinates in (x,y)
+    #lastMove = (x1,y1) (x2, y2) of move made
+    #listOfMoves = list of lastMove 's made
+    #cordEdges = 9x9 array that tells you how many edges are attached to that specific coordinate
+    def decideMove(board, lastMove, listOfMoves, cordEdges):
         #File_object = open("move", "r")
         #File_object.readline([n]) to look at opponent's last move (or look at board?)
         #self.board.get(edge) is used in game.py to see if an edge is taken or not

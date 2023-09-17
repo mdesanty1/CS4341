@@ -100,18 +100,34 @@ class GroupName:
                     if cordEdges.get(leftCoordinate) < 2 & x != 0:
                         #Current chosen move
                         chosenMove = (currCoordinate), (leftCoordinate)
+                        #Add 1 to number of edges at those nodes
+                        cordEdges.get(currCoordinate).set(cordEdges.get(currCoordinate) + 1)
+                        cordEdges.get(leftCoordinate).set(cordEdges.get(leftCoordinate) + 1)
+                        prevNumEdges = numEdges
 
                     elif cordEdges.get(rightCoordinate) < 2 & x != 8:
                         #Current chosen move
                         chosenMove = (currCoordinate), (rightCoordinate)
+                        #Add 1 to number of edges at those nodes
+                        cordEdges.get(currCoordinate).set(cordEdges.get(currCoordinate) + 1)
+                        cordEdges.get(rightCoordinate).set(cordEdges.get(rightCoordinate) + 1)
+                        prevNumEdges = numEdges
 
                     elif cordEdges.get(topCoordinate) < 2 & y != 0:
                         #Current chosen move
                         chosenMove = (currCoordinate), (topCoordinate)
+                        #Add 1 to number of edges at those nodes
+                        cordEdges.get(currCoordinate).set(cordEdges.get(currCoordinate) + 1)
+                        cordEdges.get(topCoordinate).set(cordEdges.get(topCoordinate) + 1)
+                        prevNumEdges = numEdges
                         
                     elif cordEdges.get(bottomCoordinate) < 2 & y != 8:
                         #Current chosen move
                         chosenMove = (currCoordinate), (bottomCoordinate)
+                        #Add 1 to number of edges at those nodes
+                        cordEdges.get(currCoordinate).set(cordEdges.get(currCoordinate) + 1)
+                        cordEdges.get(bottomCoordinate).set(cordEdges.get(bottomCoordinate) + 1)
+                        prevNumEdges = numEdges
                     
                     #case where we don't want to go here: go back to start of nested for loop
                     else:
@@ -144,6 +160,6 @@ class GroupName:
         #Opens file with all players moves
         File_object = open("move_file", "w")
         #Writes in selected move from decideMove()
-        File_object.write(move  "\n")
+        File_object.write(move)
         #Closes file unti next turn
         File_object.close()

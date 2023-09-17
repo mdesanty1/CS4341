@@ -48,6 +48,13 @@ class Game:
         self.c2 = 1
         #Create empty list of moves to show the edges
         self.listOfMoves = []
+        #Create array of coordinates of the board
+        boardCords = np.array()
+        #Initialize board coordinates of a 9x9 matrix
+        for x in range(0,8):
+            for y in range(0,8):
+                boardCords[x][y] = [x,y]
+
 
     
         # Allows to easily change players and markers
@@ -87,7 +94,7 @@ class Game:
                 int(c1)
                 int(r2)
                 int(c2)
-                print(self.board)
+                #print(self.board)
                 self.move = selected_move
                 #append move to list of moves
                 self.listOfMoves.append(self.move)

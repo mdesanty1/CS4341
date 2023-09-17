@@ -3,7 +3,7 @@
 import numpy as np
 import pygame
 
-class GroupName:
+class MandM:
     #def __init__(self):
 
     #Takes in current board and last move
@@ -146,7 +146,7 @@ class GroupName:
             #Would need to check how many lines are connected to current node and node next to it
             #If box is closed, that player gets to go again
 
-        updateBoard(move)
+        updateBoard(chosenMove)
 
     #Helper function used: iterative deepening
     #Want to check next move which allows us to deepen & prune at a level of 2
@@ -160,6 +160,7 @@ class GroupName:
         #Opens file with all players moves
         File_object = open("move_file", "w")
         #Writes in selected move from decideMove()
-        File_object.write(move)
+        File_object.write("MandM" +move, end='\n')
         #Closes file unti next turn
         File_object.close()
+        return move

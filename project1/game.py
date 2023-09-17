@@ -6,7 +6,8 @@ import display as disp
 from dotsandboxes import generateEdges
 from external_players import external_player
 #Import groupname file to run within this file
-from MandM import mandm
+from MandM import MandM
+
 
 # Each AI function will have its own file to allow for more modular creation
 import human
@@ -42,10 +43,10 @@ class Game:
         self.moves = 0
         self.pass_or_go = False
         #Define coordinates globally so we can access them in main AI file
-        self.r1 = 0
-        self.c1 = 0
-        self.r2 = 0
-        self.c2 = 1
+        self.r1 = r1
+        self.c1 = c1
+        self.r2 = r2
+        self.c2 = c2
         #Create empty list of moves to show the edges
         self.listOfMoves = []
         #Create array of coordinates of the board
@@ -105,8 +106,12 @@ class Game:
                 self.cordEdges[r1][c1] = self.cordEdges[r1][c1] + 1
                 self.cordEdges[r2][c2] = self.cordEdges[r2][c2] + 1
                 #Passes in the board coordinates, last move made, list of current moves, and list of number of edges at each coordinate
-                mandm.decideMove(self.boardCords, self.move, self.listOfMoves, self.cordEdges)
-
+                chosenMove = MandM.decideMove(self.boardCords, self.move, self.listOfMoves, self.cordEdges)
+                #Reset r and c values for ref to check
+                r1 = chosenMove[0,0]
+                c1 = chosenMove[0,1]
+                r2 = chosenMove[1,0]
+                c2 = chosenMove[1,1]
             except TypeError:
 
                 # there was a bad move given
@@ -253,5 +258,5 @@ class Game:
         # make sure inside dictionary and not marked
 
 if __name__ == "__main__":
-    game = Game(human.human_player, human.human_player, p1_name='Player 1', p2_name='Player 2', rand_start=True)
+    game = Game(human.human_player, human.human_player, p1_name='Player 1', p2_name='Player 2', rand_start=True,  r1=0, r2=0, c1=0, c2=0, listOfMoves = [], cordEdges=[])
     game.run()

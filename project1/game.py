@@ -87,7 +87,7 @@ class Game:
                 int(c1)
                 int(r2)
                 int(c2)
-
+                print(self.board)
                 self.move = selected_move
                 #append move to list of moves
                 self.listOfMoves.append(self.move)

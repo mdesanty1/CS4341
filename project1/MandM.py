@@ -161,19 +161,21 @@ class MandM:
                             #Opens file with all players moves
                             #Checks if a box was closed, if so then the player passes
                             if os.path.exists('./Megan.pass'):
+                                File_object = open("move_file", "w")
                                 File_object.write("Megan 0,0 0,0")
                                 File_object.close()
                             #Checks if a box was closed, if so then the player passes
                             elif os.path.exists('./Michael.pass'):
+                                File_object = open("move_file", "w")
                                 File_object.write("Michael 0,0 0,0")
                                 File_object.close()
                             #Writes in selected move from decideMove() if it is player's turn
-                            elif os.path.exists('/.Megan.go'):
+                            elif os.path.exists('./Megan.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan " +chosenMove)
                                 File_object.close()
                             #Writes in selected move from decideMove() if it is player's turn
-                            elif os.path.exists('/.Michael.go'):
+                            elif os.path.exists('./Michael.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael " +chosenMove)
                                 File_object.close()
@@ -204,12 +206,12 @@ class MandM:
                                 File_object.write("Michael 0,0 0,0")
                                 File_object.close()
                             #Writes in selected move from decideMove() if it is player's turn
-                            elif os.path.exists('/.Megan.go'):
+                            elif os.path.exists('./Megan.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan " +str(chosenMove))
                                 File_object.close()
                             #Writes in selected move from decideMove() if it is player's turn
-                            elif os.path.exists('/.Michael.go'):
+                            elif os.path.exists('./Michael.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael " +str(chosenMove))
                                 File_object.close()
@@ -241,12 +243,12 @@ class MandM:
                                 File_object.write("Michael 0,0 0,0")
                                 File_object.close()
                             #Writes in selected move from decideMove() if it is player's turn
-                            elif os.path.exists('/.Megan.go'):
+                            elif os.path.exists('./Megan.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan " +chosenMove)
                                 File_object.close()
                             #Writes in selected move from decideMove() if it is player's turn
-                            elif os.path.exists('/.Michael.go'):
+                            elif os.path.exists('./Michael.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael " +chosenMove)
                                 File_object.close()
@@ -277,12 +279,12 @@ class MandM:
                                 File_object.write("Michael 0,0 0,0")
                                 File_object.close()
                             #Writes in selected move from decideMove() if it is player's turn
-                            elif os.path.exists('/.Megan.go'):
+                            elif os.path.exists('./Megan.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan " +chosenMove)
                                 File_object.close()
                             #Writes in selected move from decideMove() if it is player's turn
-                            elif os.path.exists('/.Michael.go'):
+                            elif os.path.exists('./Michael.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael " +chosenMove)
                                 File_object.close()
@@ -337,5 +339,7 @@ class MandM:
             File_object.write("Michael " +move)
         #Closes file until next turn
         File_object.close()
+
 if __name__ == "__main__":
-    MandM()
+    print("detecteddddddddddddddddddddddddddd")
+    MandM() 

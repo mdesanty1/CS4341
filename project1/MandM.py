@@ -3,9 +3,22 @@
 import numpy as np
 import pygame
 import os.path
+import time
 from os.path import exists
 
 class MandM:
+    #Initialize 9x9 that tells you how many edges are at the corresponding coordinate
+    #Initialized to all zeros to start the game
+    cordEdges = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
     def __init__(self):
         #Define board coordinates
         self.board = [[(0,0), (0,1), (0,2), (0,3), (0,4), (0,5), (0,6), (0,7), (0,8), (0,9)], 
@@ -19,35 +32,27 @@ class MandM:
                       [(8,0), (8,1), (8,2), (8,3), (8,4), (8,5), (8,6), (8,7), (8,8), (8,9)],
                       [(9,0), (9,1), (9,2), (9,3), (9,4), (9,5), (9,6), (9,7), (9,8), (9,9)]]
 
-        #Initialize 9x9 that tells you how many edges are at the corresponding coordinate
-        #Initialized to all zeros to start the game
-        self.cordEdges = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-                          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
         #self.decideMove(self.board, self.cordEdges)
         #If player 1 or player 2 files exist, begin running function
-        if os.path.exists('./Megan.go') or os.path.exists('./Michael.go'):
-            #First check if an end game file exists
-            if os.path.exists('./end_game.py'):
-                #Display the end result of the game -> read the file because it has the end result of the game
-                File_object = open("end_game.py", "r")
-                File_object.read()
-            #Only runs on the first turn and there is nothing in the move file
-            elif os.stat("move_file").st_size == 0:
-                self.decideMove(self.board, self.cordEdges)
-            #If not the end of the game
-            else:
-                #Read the opponents move from move_file
-            #    File_object = open("move_file", "r")
-            #    File_object.read()
-                self.decideMove(self.board, self.cordEdges)
+        print("hello")
+        while(not(os.path.exists('./Megan.go')) and not(os.path.exists('./Michael.go'))):
+            if os.path.exists('./Megan.go') or os.path.exists('./Michael.go'):
+                #First check if an end game file exists
+                if os.path.exists('./end_game.py'):
+                    #Display the end result of the game -> read the file because it has the end result of the game
+                    File_object = open("end_game.py", "r")
+                    File_object.read()
+                #Only runs on the first turn and there is nothing in the move file
+                elif os.stat("move_file").st_size == 0:
+                    self.decideMove(self.board, self.cordEdges)
+                #If not the end of the game
+                else:
+                    #Read the opponents move from move_file
+                #    File_object = open("move_file", "r")
+                #    File_object.read()
+                    self.decideMove(self.board, self.cordEdges)
+            print("looping")
+            time.sleep(.5)
             
 
     #Takes in current board and last move
@@ -164,21 +169,25 @@ class MandM:
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan 0,0 0,0")
                                 File_object.close()
+                                test = MandM()
                             #Checks if a box was closed, if so then the player passes
                             elif os.path.exists('./Michael.pass'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael 0,0 0,0")
                                 File_object.close()
+                                test = MandM()
                             #Writes in selected move from decideMove() if it is player's turn
                             elif os.path.exists('./Megan.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan " +chosenMove)
                                 File_object.close()
+                                test = MandM()
                             #Writes in selected move from decideMove() if it is player's turn
                             elif os.path.exists('./Michael.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael " +chosenMove)
                                 File_object.close()
+                                test = MandM()
                             #Closes file until next turn
                             File_object.close()
                         #Add 1 to number of edges at those nodes
@@ -200,21 +209,25 @@ class MandM:
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan 0,0 0,0")
                                 File_object.close()
+                                test = MandM()
                             #Checks if a box was closed, if so then the player passes
                             elif os.path.exists('./Michael.pass'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael 0,0 0,0")
                                 File_object.close()
+                                test = MandM()
                             #Writes in selected move from decideMove() if it is player's turn
                             elif os.path.exists('./Megan.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan " +str(chosenMove))
                                 File_object.close()
+                                test = MandM()
                             #Writes in selected move from decideMove() if it is player's turn
                             elif os.path.exists('./Michael.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael " +str(chosenMove))
                                 File_object.close()
+                                test = MandM()
 
                             #Closes file until next turn
                             #Add 1 to number of edges at those nodes
@@ -237,21 +250,25 @@ class MandM:
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan 0,0 0,0")
                                 File_object.close()
+                                test = MandM()
                             #Checks if a box was closed, if so then the player passes
                             elif os.path.exists('./Michael.pass'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael 0,0 0,0")
                                 File_object.close()
+                                test = MandM()
                             #Writes in selected move from decideMove() if it is player's turn
                             elif os.path.exists('./Megan.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan " +chosenMove)
                                 File_object.close()
+                                test = MandM()
                             #Writes in selected move from decideMove() if it is player's turn
                             elif os.path.exists('./Michael.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael " +chosenMove)
                                 File_object.close()
+                                test = MandM()
                             #Closes file until next turn
                         #Add 1 to number of edges at those nodes
                         cordEdges[x][y] = cordEdges[x][y] + 1
@@ -273,21 +290,25 @@ class MandM:
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan 0,0 0,0")
                                 File_object.close()
+                                test = MandM()
                             #Checks if a box was closed, if so then the player passes
                             elif os.path.exists('./Michael.pass'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael 0,0 0,0")
                                 File_object.close()
+                                test = MandM()
                             #Writes in selected move from decideMove() if it is player's turn
                             elif os.path.exists('./Megan.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan " +chosenMove)
                                 File_object.close()
+                                test = MandM()
                             #Writes in selected move from decideMove() if it is player's turn
                             elif os.path.exists('./Michael.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael " +chosenMove)
                                 File_object.close()
+                                test = MandM()
                             #Closes file until next turn
                         #Add 1 to number of edges at those nodes
                         cordEdges[x][y] = cordEdges[x][y] + 1
@@ -341,5 +362,6 @@ class MandM:
         File_object.close()
 
 if __name__ == "__main__":
-    print("detecteddddddddddddddddddddddddddd")
-    MandM() 
+    print("detected")
+    test = MandM()
+    print("ended")

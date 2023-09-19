@@ -18,6 +18,7 @@ from os.path import isfile, join
 
 from external_players import get_competitors
 from game import Game
+from MandM import MandM
 
 def clean():
     """
@@ -74,6 +75,7 @@ def main():
     # Run game
     game = Game(f_p1, f_p2, p1_name=p1, p2_name=p2, rand_start=True)
     game.run()
+    MandM.run()
 
 
 if __name__ == "__main__":

@@ -2,9 +2,36 @@
 #from game import Game
 import numpy as np
 import pygame
+import os.path
 
 class MandM:
-    #def __init__(self):
+    #Define board coordinates
+    board = np.array(9,9)
+    for x in range(0,8):
+        for y in range(0,8):
+            board[x][y] = [x,y]
+    #Initialize 9x9 that tells you how many edges are at the corresponding coordinate
+    #Initialized to all zeros to start the game
+    cordEdges = np.zeros(9,9)
+
+    def __init__(self):
+        #If player 1 or player 2 files exist, begin running function
+        if os.path.exists('./Megan.go') or os.path.exists('./Michael.go'):
+            #First check if an end game file exists
+            if os.path.exists('./end_game.py'):
+                #Display the end result of the game -> read the file because it has the end result of the game
+                File_object = open("end_game.py", "r")
+                File_object.read()
+            #Only runs on the first turn and there is nothing in the move file
+            elif os.stat("move_file").st_size == 0:
+                self.decideMove(self.board, self.lastMove, self.listOfMoves, self.cordEdges)
+            #If not the end of the game
+            else:
+                #Read the opponents move from move_file
+                File_object = open("move_file", "r")
+                File_object.read()
+                self.decideMove(self.board, self.lastMove, self.listOfMoves, self.cordEdges)
+            
 
     #Takes in current board and last move
     #board = 9x9 of board coordinates in (x,y)
@@ -12,7 +39,7 @@ class MandM:
     #listOfMoves = list of lastMove 's made
     #cordEdges = 9x9 array that tells you how many edges are attached to that specific coordinate
         #Helps AI in determining where to go (Iterative deepening heuristic that looks for coordinates with 0 or 1 edges connected)
-    def decideMove(board, lastMove, listOfMoves, cordEdges):
+    def decideMove(self, board, lastMove, listOfMoves, cordEdges):
         #Opens file with all players moves
         #File_object = open("move_file", "r")
         #File_object.close()
@@ -146,7 +173,7 @@ class MandM:
             #Would need to check how many lines are connected to current node and node next to it
             #If box is closed, that player gets to go again
 
-        updateBoard(chosenMove)
+        self.updateBoard(chosenMove)
 
     #Helper function used: iterative deepening
     #Want to check next move which allows us to deepen & prune at a level of 2
@@ -159,8 +186,17 @@ class MandM:
     def updateBoard(move):
         #Opens file with all players moves
         File_object = open("move_file", "w")
-        #Writes in selected move from decideMove()
-        File_object.write("MandM" +move, end='\n')
-        #Closes file unti next turn
+        #Checks if a box was closed, if so then the player passes
+        if os.path.exists('./Megan.pass'):
+            File_object.write("Megan 0,0 0,0")
+        #Checks if a box was closed, if so then the player passes
+        elif os.path.exists('./Megan.pass'):
+            File_object.write("Michael 0,0 0,0")
+        #Writes in selected move from decideMove() if it is player's turn
+        elif os.path.exists('./Megan.go'):
+            File_object.write("Megan" +move)
+        #Writes in selected move from decideMove() if it is player's turn
+        elif os.path.exists('./Michael.go'):
+            File_object.write("Michael" +move)
+        #Closes file until next turn
         File_object.close()
-        return move

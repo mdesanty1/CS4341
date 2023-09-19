@@ -1,13 +1,11 @@
 
+
 import numpy as np
 import pygame
 import core_gameplay as gp
 import display as disp
 from dotsandboxes import generateEdges
 from external_players import external_player
-#Import groupname file to run within this file
-from MandM import MandM
-
 
 # Each AI function will have its own file to allow for more modular creation
 import human
@@ -31,7 +29,7 @@ def nums_output(nums, p1_name, p2_name):
 
 
 class Game:
-    def __init__(self, r1, c1, r2, c2, listOfMoves, cordEdges, f_p1, f_p2, p1_name=None, p2_name=None, rand_start=False):
+    def __init__(self, f_p1, f_p2, p1_name=None, p2_name=None, rand_start=False):
         self.names = [gp.PLAYER0_MARKER if p1_name is None else p1_name,
                       gp.PLAYER1_MARKER if p2_name is None else p2_name]
         self.f_p1 = f_p1
@@ -42,24 +40,6 @@ class Game:
         self.completed_squares = []
         self.moves = 0
         self.pass_or_go = False
-        #Define coordinates globally so we can access them in main AI file
-        self.r1 = r1
-        self.c1 = c1
-        self.r2 = r2
-        self.c2 = c2
-        #Create empty list of moves to show the edges
-        self.listOfMoves = []
-        #Create array of coordinates of the board
-        boardCords = np.array()
-        #Initialize board coordinates of a 9x9 matrix
-        for x in range(0,8):
-            for y in range(0,8):
-                boardCords[x][y] = [x,y]
-        #Initialize 9x9 that tells you how many edges are at the corresponding coordinate
-        #Initialized to all zeros to start the game
-        self.cordEdges = np.zeros(9,9)
-
-
     
         # Allows to easily change players and markers
         self.current_player = 0
@@ -84,10 +64,12 @@ class Game:
 
             current_marker = self.markers[self.current_player]
             if self.current_player == 0:
+
                 selected_move = self.f_p1(self.board,
                                           self.names[1], self.names[0], self.pass_or_go)
 
             else:
+
                 selected_move = self.f_p2(self.board,
                                           self.names[0], self.names[1], self.pass_or_go)
 
@@ -98,20 +80,9 @@ class Game:
                 int(c1)
                 int(r2)
                 int(c2)
-                #add an edge to the selected move
-                self.move = selected_move
-                #append move to list of moves
-                self.listOfMoves.append(self.move)
-                #Add an edge to those coordinates
-                self.cordEdges[r1][c1] = self.cordEdges[r1][c1] + 1
-                self.cordEdges[r2][c2] = self.cordEdges[r2][c2] + 1
-                #Passes in the board coordinates, last move made, list of current moves, and list of number of edges at each coordinate
-                chosenMove = MandM.decideMove(self.boardCords, self.move, self.listOfMoves, self.cordEdges)
-                #Reset r and c values for ref to check
-                r1 = chosenMove[0,0]
-                c1 = chosenMove[0,1]
-                r2 = chosenMove[1,0]
-                c2 = chosenMove[1,1]
+
+                move = selected_move
+
             except TypeError:
 
                 # there was a bad move given
@@ -258,5 +229,5 @@ class Game:
         # make sure inside dictionary and not marked
 
 if __name__ == "__main__":
-    game = Game(human.human_player, human.human_player, p1_name='Player 1', p2_name='Player 2', rand_start=True,  r1=0, r2=0, c1=0, c2=0, listOfMoves = [], cordEdges=[])
+    game = Game(human.human_player, human.human_player, p1_name='Player 1', p2_name='Player 2', rand_start=True)
     game.run()

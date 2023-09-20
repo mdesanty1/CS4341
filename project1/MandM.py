@@ -19,6 +19,8 @@ class MandM:
                         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
+    listOfMoves = []
+
     def __init__(self):
         #Define board coordinates
         self.board = [[(0,0), (0,1), (0,2), (0,3), (0,4), (0,5), (0,6), (0,7), (0,8), (0,9)], 
@@ -34,9 +36,29 @@ class MandM:
 
         #self.decideMove(self.board, self.cordEdges)
         #If player 1 or player 2 files exist, begin running function
-        print("hello")
-        while(not(os.path.exists('./Megan.go')) and not(os.path.exists('./Michael.go'))):
-            if os.path.exists('./Megan.go') or os.path.exists('./Michael.go'):
+        if(os.path.exists('./Megan.go') == False and os.path.exists('./Michael.go') == False):
+            n = 0
+            print("hello")
+            while(n==0):
+                if os.path.exists('./Megan.go') or os.path.exists('./Michael.go'):
+                    n = n+1
+                    #First check if an end game file exists
+                    if os.path.exists('./end_game.py'):
+                        #Display the end result of the game -> read the file because it has the end result of the game
+                        File_object = open("end_game.py", "r")
+                        File_object.read()
+                    #Only runs on the first turn and there is nothing in the move file
+                    elif os.stat("move_file").st_size == 0:
+                        self.decideMove(self.board, self.cordEdges)
+                    #If not the end of the game
+                    else:
+                        #Read the opponents move from move_file
+                    #    File_object = open("move_file", "r")
+                    #    File_object.read()
+                        self.decideMove(self.board, self.cordEdges)
+                print("looping")
+                time.sleep(.5)
+        else:
                 #First check if an end game file exists
                 if os.path.exists('./end_game.py'):
                     #Display the end result of the game -> read the file because it has the end result of the game
@@ -50,10 +72,7 @@ class MandM:
                     #Read the opponents move from move_file
                 #    File_object = open("move_file", "r")
                 #    File_object.read()
-                    self.decideMove(self.board, self.cordEdges)
-            print("looping")
-            time.sleep(.5)
-            
+                    self.decideMove(self.board, self.cordEdges)    
 
     #Takes in current board and last move
     #board = 9x9 of board coordinates in (x,y)
@@ -81,7 +100,6 @@ class MandM:
         #Explore all options -> store the number of boxes each route captures
         #Start checking the board from left to right, starting at row 0, then row 1, etc
         x = 0
-        listOfMoves = []
         while x < 9:
             for y in range(0,10):
                 #check number of edges at the given coordinate
@@ -158,162 +176,150 @@ class MandM:
                     if cordEdges[x-1][y] < 2 and x != 0:
                         #Current chosen move
                         chosenMove = (currCoordinate), (leftCoordinate)
-                        if chosenMove in listOfMoves:
+                        if chosenMove in self.listOfMoves:
                             continue
                         else:
                             #Current chosen move
-                            listOfMoves.append(chosenMove)
+                            self.listOfMoves.append(chosenMove)
                             #Opens file with all players moves
                             #Checks if a box was closed, if so then the player passes
                             if os.path.exists('./Megan.pass'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan 0,0 0,0")
                                 File_object.close()
-                                test = MandM()
                             #Checks if a box was closed, if so then the player passes
                             elif os.path.exists('./Michael.pass'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael 0,0 0,0")
                                 File_object.close()
-                                test = MandM()
                             #Writes in selected move from decideMove() if it is player's turn
                             elif os.path.exists('./Megan.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan " +chosenMove)
                                 File_object.close()
-                                test = MandM()
                             #Writes in selected move from decideMove() if it is player's turn
                             elif os.path.exists('./Michael.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael " +chosenMove)
                                 File_object.close()
-                                test = MandM()
                             #Closes file until next turn
                             File_object.close()
                         #Add 1 to number of edges at those nodes
                         cordEdges[x][y] = cordEdges[x][y] + 1
                         cordEdges[x-1][y] = cordEdges[x-1][y] + 1
                         prevNumEdges = numEdges
+                        test = MandM()
                         break
 
                     elif cordEdges[x+1][y] < 2 and x != 8:
                         chosenMove = (currCoordinate), (rightCoordinate)
-                        if chosenMove in listOfMoves:
+                        if chosenMove in self.listOfMoves:
                             continue
                         else:
                             #Current chosen move
-                            listOfMoves.append(chosenMove)
+                            self.listOfMoves.append(chosenMove)
                             #Opens file with all players moves
                             #Checks if a box was closed, if so then the player passes
                             if os.path.exists('./Megan.pass'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan 0,0 0,0")
                                 File_object.close()
-                                test = MandM()
                             #Checks if a box was closed, if so then the player passes
                             elif os.path.exists('./Michael.pass'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael 0,0 0,0")
                                 File_object.close()
-                                test = MandM()
                             #Writes in selected move from decideMove() if it is player's turn
                             elif os.path.exists('./Megan.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan " +str(chosenMove))
                                 File_object.close()
-                                test = MandM()
                             #Writes in selected move from decideMove() if it is player's turn
                             elif os.path.exists('./Michael.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael " +str(chosenMove))
                                 File_object.close()
-                                test = MandM()
 
                             #Closes file until next turn
                             #Add 1 to number of edges at those nodes
                             cordEdges[x][y] = cordEdges[x][y] + 1
                             cordEdges[x+1][y] = cordEdges[x+1][y] + 1
                             prevNumEdges = numEdges
+                            test = MandM()
                             break
 
                     elif cordEdges[x][y-1] < 2 and y != 0:
                         #Current chosen move
                         chosenMove = (currCoordinate), (topCoordinate)
-                        if chosenMove in listOfMoves:
+                        if chosenMove in self.listOfMoves:
                             continue
                         else:
                             #Current chosen move
-                            listOfMoves.append(chosenMove)
+                            self.listOfMoves.append(chosenMove)
                             #Opens file with all players moves
                             #Checks if a box was closed, if so then the player passes
                             if os.path.exists('./Megan.pass'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan 0,0 0,0")
                                 File_object.close()
-                                test = MandM()
                             #Checks if a box was closed, if so then the player passes
                             elif os.path.exists('./Michael.pass'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael 0,0 0,0")
                                 File_object.close()
-                                test = MandM()
                             #Writes in selected move from decideMove() if it is player's turn
                             elif os.path.exists('./Megan.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan " +chosenMove)
                                 File_object.close()
-                                test = MandM()
                             #Writes in selected move from decideMove() if it is player's turn
                             elif os.path.exists('./Michael.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael " +chosenMove)
                                 File_object.close()
-                                test = MandM()
                             #Closes file until next turn
                         #Add 1 to number of edges at those nodes
                         cordEdges[x][y] = cordEdges[x][y] + 1
                         cordEdges[x][y-1] = cordEdges[x][y-1] + 1
                         prevNumEdges = numEdges
+                        test = MandM()
                         break
                         
                     elif cordEdges[x][y+1] < 2 and y != 8:
                         #Current chosen move
                         chosenMove = (currCoordinate), (bottomCoordinate)
-                        if chosenMove in listOfMoves:
+                        if chosenMove in self.listOfMoves:
                             continue
                         else:
                             #Current chosen move
-                            listOfMoves.append(chosenMove)
+                            self.listOfMoves.append(chosenMove)
                             #Opens file with all players moves
                             #Checks if a box was closed, if so then the player passes
                             if os.path.exists('./Megan.pass'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan 0,0 0,0")
                                 File_object.close()
-                                test = MandM()
                             #Checks if a box was closed, if so then the player passes
                             elif os.path.exists('./Michael.pass'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael 0,0 0,0")
                                 File_object.close()
-                                test = MandM()
                             #Writes in selected move from decideMove() if it is player's turn
                             elif os.path.exists('./Megan.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Megan " +chosenMove)
                                 File_object.close()
-                                test = MandM()
                             #Writes in selected move from decideMove() if it is player's turn
                             elif os.path.exists('./Michael.go'):
                                 File_object = open("move_file", "w")
                                 File_object.write("Michael " +chosenMove)
                                 File_object.close()
-                                test = MandM()
                             #Closes file until next turn
                         #Add 1 to number of edges at those nodes
                         cordEdges[x][y] = cordEdges[x][y] + 1
                         cordEdges[x][y+1] = cordEdges[x][y+1] + 1
                         prevNumEdges = numEdges
+                        test = MandM()
                         break
                     
                     #case where we don't want to go here: go back to start of nested for loop

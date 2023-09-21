@@ -19,18 +19,21 @@ class MandM:
                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]
-    listOfMoves = [[((0,0), (0,0)), ((0,1), (0,1)), ((0,2), (0,2)), ((0,3), (0,3)), ((0,4), (0,4)), ((0,5), (0,5)), ((0,6), (0,6)), ((0,7), (0,7)), ((0,8), (0,8)), ((0,9), (0,9))],
-                   [((1,0), (1,0)), ((1,1), (1,1)), ((1,2), (1,2)), ((1,3), (1,3)), ((1,4), (1,4)), ((1,5), (1,5)), ((1,6), (1,6)), ((1,7), (1,7)), ((1,8), (1,8)), ((1,9), (1,9))],
-                   [((2,0), (2,0)), ((2,1), (2,1)), ((2,2), (2,2)), ((2,3), (2,3)), ((2,4), (2,4)), ((2,5), (2,5)), ((2,6), (2,6)), ((2,7), (2,7)), ((2,8), (2,8)), ((2,9), (2,9))],
-                   [((3,0), (3,0)), ((3,1), (3,1)), ((3,2), (3,2)), ((3,3), (3,3)), ((3,4), (3,4)), ((3,5), (3,5)), ((3,6), (3,6)), ((3,7), (3,7)), ((3,8), (3,8)), ((3,9), (3,9))],
-                   [((4,0), (4,0)), ((4,1), (4,1)), ((4,2), (4,2)), ((4,3), (4,3)), ((4,4), (4,4)), ((4,5), (4,5)), ((4,6), (4,6)), ((4,7), (4,7)), ((4,8), (4,8)), ((4,9), (4,9))],
-                   [((5,0), (5,0)), ((5,1), (5,1)), ((5,2), (5,2)), ((5,3), (5,3)), ((5,4), (5,4)), ((5,5), (5,5)), ((5,6), (5,6)), ((5,7), (5,7)), ((5,8), (5,8)), ((5,9), (5,9))],
-                   [((6,0), (6,0)), ((6,1), (6,1)), ((6,2), (6,2)), ((6,3), (6,3)), ((6,4), (6,4)), ((6,5), (6,5)), ((6,6), (6,6)), ((6,7), (6,7)), ((6,8), (6,8)), ((6,9), (6,9))],
-                   [((7,0), (7,0)), ((7,1), (7,1)), ((7,2), (7,2)), ((7,3), (7,3)), ((7,4), (7,4)), ((7,5), (7,5)), ((7,6), (7,6)), ((7,7), (7,7)), ((7,8), (7,8)), ((7,9), (7,9))],
-                   [((8,0), (8,0)), ((8,1), (8,1)), ((8,2), (8,2)), ((8,3), (8,3)), ((8,4), (8,4)), ((8,5), (8,5)), ((8,6), (8,6)), ((8,7), (8,7)), ((8,8), (8,8)), ((8,9), (8,9))],
-                   [((9,0), (9,0)), ((9,1), (9,1)), ((9,2), (9,2)), ((9,3), (9,3)), ((9,4), (9,4)), ((9,5), (9,5)), ((9,6), (9,6)), ((9,7), (9,7)), ((9,8), (9,8)), ((9,9), (9,9))]]
+    listOfMoves = []
+        #[((0,0), (0,0)), ((0,1), (0,1)), ((0,2), (0,2)), ((0,3), (0,3)), ((0,4), (0,4)), ((0,5), (0,5)), ((0,6), (0,6)), ((0,7), (0,7)), ((0,8), (0,8)), ((0,9), (0,9))],
+         #          [((1,0), (1,0)), ((1,1), (1,1)), ((1,2), (1,2)), ((1,3), (1,3)), ((1,4), (1,4)), ((1,5), (1,5)), ((1,6), (1,6)), ((1,7), (1,7)), ((1,8), (1,8)), ((1,9), (1,9))],
+          #         [((2,0), (2,0)), ((2,1), (2,1)), ((2,2), (2,2)), ((2,3), (2,3)), ((2,4), (2,4)), ((2,5), (2,5)), ((2,6), (2,6)), ((2,7), (2,7)), ((2,8), (2,8)), ((2,9), (2,9))],
+           #        [((3,0), (3,0)), ((3,1), (3,1)), ((3,2), (3,2)), ((3,3), (3,3)), ((3,4), (3,4)), ((3,5), (3,5)), ((3,6), (3,6)), ((3,7), (3,7)), ((3,8), (3,8)), ((3,9), (3,9))],
+            #       [((4,0), (4,0)), ((4,1), (4,1)), ((4,2), (4,2)), ((4,3), (4,3)), ((4,4), (4,4)), ((4,5), (4,5)), ((4,6), (4,6)), ((4,7), (4,7)), ((4,8), (4,8)), ((4,9), (4,9))],
+             #      [((5,0), (5,0)), ((5,1), (5,1)), ((5,2), (5,2)), ((5,3), (5,3)), ((5,4), (5,4)), ((5,5), (5,5)), ((5,6), (5,6)), ((5,7), (5,7)), ((5,8), (5,8)), ((5,9), (5,9))],
+              #     [((6,0), (6,0)), ((6,1), (6,1)), ((6,2), (6,2)), ((6,3), (6,3)), ((6,4), (6,4)), ((6,5), (6,5)), ((6,6), (6,6)), ((6,7), (6,7)), ((6,8), (6,8)), ((6,9), (6,9))],
+               #    [((7,0), (7,0)), ((7,1), (7,1)), ((7,2), (7,2)), ((7,3), (7,3)), ((7,4), (7,4)), ((7,5), (7,5)), ((7,6), (7,6)), ((7,7), (7,7)), ((7,8), (7,8)), ((7,9), (7,9))],
+                #   [((8,0), (8,0)), ((8,1), (8,1)), ((8,2), (8,2)), ((8,3), (8,3)), ((8,4), (8,4)), ((8,5), (8,5)), ((8,6), (8,6)), ((8,7), (8,7)), ((8,8), (8,8)), ((8,9), (8,9))],
+                 #  [((9,0), (9,0)), ((9,1), (9,1)), ((9,2), (9,2)), ((9,3), (9,3)), ((9,4), (9,4)), ((9,5), (9,5)), ((9,6), (9,6)), ((9,7), (9,7)), ((9,8), (9,8)), ((9,9), (9,9))]]
     x = 0
-    n = 0
+    c = 0
+    r = 0
+    #n = 0
     #initialize a current move variable for checking if boxes are taken
     currentMove = ((0,0), (0,0))
 
@@ -56,10 +59,10 @@ class MandM:
                 #if a go file exists OR a pass file (because we want the player to go through the same process)
                 if os.path.exists('./Megan.go') or os.path.exists('./Michael.go') or os.path.exists('./Megan.pass') or os.path.exists('./Michael.pass'):
                     #set n to 1 saying that the go file or pass file exists
-                    n = n+1
                     #First check if an end game file exists
                     if os.path.exists('./end_game.py'):
                         #Display the end result of the game -> read the file because it has the end result of the game
+                        n = n+1
                         File_object = open("end_game.py", "r")
                         File_object.read()
                     #If not the end of the game 
@@ -67,276 +70,326 @@ class MandM:
                         #if there are no boxes to close, run the decideMove function
                         #if there are boxes to close, write that move to the file and set n = 0 to re-loop
                     else:
+                        #print("there's no end game file")
                         #Loop to check if there are any boxes to close
-                        if self.n == 0:
-                            c = 0
-                            while c <= 9:
-                                for r in range(0,10):
-                                    #set coordinates to reference when determining if we can close a box
-                                    currCoordinate = [c][r]
-                                    leftCoordinate = [c][r-1]
-                                    rightCoordinate = [c][r+1]
-                                    topCoordinate = [c-1][r]
-                                    bottomCoordinate = [c+1][r]
-                                    topLeftCoordinate = [c-1][r-1]
-                                    topRightCoordinate = [c-1][r+1]
-                                    bottomLeftCoordinate = [c+1][r-1]
-                                    bottomRightCoordinate = [c+1][r+1]
-                                    #start at (0,0)
-                                    #if y = 0 & x = 0, check bottom right (Q4)
-                                    if r == 0 and c == 0:
-                                        #bottom right (1)
-                                        if ((rightCoordinate, bottomRightCoordinate) in self.listOfMoves
-                                        and (bottomCoordinate, bottomRightCoordinate) in self.listOfMoves
-                                        and (currCoordinate, bottomCoordinate) in self.listOfMoves):
-                                            currentMove = (currCoordinate, rightCoordinate)
-                                        #bottom right (2)
-                                        elif ((rightCoordinate, bottomRightCoordinate) in self.listOfMoves
-                                        and (bottomCoordinate, bottomRightCoordinate) in self.listOfMoves
-                                        and (currCoordinate, rightCoordinate) in self.listOfMoves):
-                                            currentMove = (currCoordinate, bottomCoordinate)
-                                    #if y = 9 & x = 9, check top left box (Q2)
-                                    elif r == 9 and c == 9:
-                                        #top left (1)
-                                        if ((topLeftCoordinate, topCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, topLeftCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, currCoordinate) in self.listOfMoves):
-                                            #close rigt of box
-                                            currentMove = (currCoordinate, topCoordinate)
-                                        #top left (2)
-                                        elif ((currCoordinate, topCoordinate) in self.listOfMoves
-                                        and (topLeftCoordinate, topCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, topLeftCoordinate)):
-                                            #close bottom of box
-                                            currentMove = (bottomLeftCoordinate, currCoordinate)
+                        #if n == 0:
+                        while self.r <= 9:
+                            for self.c in range(0,10):
+                                #print("checking if there are boxes to close")
+                                #set coordinates to reference when determining if we can close a box
+                                currCoordinate = self.board[self.c][self.r]
+                                if self.c > 0 and self.r > 0:
+                                    topLeftCoordinate = self.board[self.c-1][self.r-1]
+                                if self.c < 9 and self.r > 0:
+                                    topRightCoordinate = self.board[self.c+1][self.r-1]
+                                if self.c > 0 and self.r < 9:
+                                    bottomLeftCoordinate = self.board[self.c-1][self.r+1]
+                                if self.c < 9 and self.r < 9:
+                                    bottomRightCoordinate = self.board[self.c+1][self.r+1]
+                                if self.c > 0:
+                                    leftCoordinate = self.board[self.c-1][self.r]
+                                if self.c < 9:
+                                    rightCoordinate = self.board[self.c+1][self.r]
+                                if self.r > 0:
+                                    topCoordinate = self.board[self.c][self.r-1]
+                                if self.r < 9:
+                                    bottomCoordinate = self.board[self.c][self.r+1]
+                                #start at (0,0)
+                                #if r = 0 & c = 0, check bottom right (Q4)
+                                if self.r == 0 and self.c == 0:
+                                    #bottom right (1)
+                                    if ((rightCoordinate, bottomRightCoordinate) in self.listOfMoves
+                                    and (bottomCoordinate, bottomRightCoordinate) in self.listOfMoves
+                                    and (currCoordinate, bottomCoordinate) in self.listOfMoves):
+                                        self.currentMove = (currCoordinate, rightCoordinate)
+                                    #bottom right (2)
+                                    elif ((rightCoordinate, bottomRightCoordinate) in self.listOfMoves
+                                    and (bottomCoordinate, bottomRightCoordinate) in self.listOfMoves
+                                    and (currCoordinate, rightCoordinate) in self.listOfMoves):
+                                        self.currentMove = (currCoordinate, bottomCoordinate)
+                                #if r = 9 & c = 9, check top left box (Q2)
+                                elif self.r == 9 and self.c == 9:
+                                    #top left (1)
+                                    if ((topLeftCoordinate, topCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, topLeftCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, currCoordinate) in self.listOfMoves):
+                                        #close rigt of box
+                                        self.currentMove = (currCoordinate, topCoordinate)
+                                        if self.c == 9:
+                                            self.r = self.r+1
+                                    #top left (2)
+                                    elif ((currCoordinate, topCoordinate) in self.listOfMoves
+                                    and (topLeftCoordinate, topCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, topLeftCoordinate)):
+                                        #close bottom of box
+                                        self.currentMove = (bottomLeftCoordinate, currCoordinate)
+                                        if self.c == 9:
+                                            self.r = self.r+1
 
-                                    #if r = 0 & c > 0, check bottom left and bottom right
-                                    elif r == 0 and c > 0 and c < 9:
-                                    #checking left
-                                        #bottom left (1)
-                                        if((currCoordinate, leftCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
-                                        and (currCoordinate, bottomCoordinate) in self.listOfMoves):
-                                            #close bottom line
-                                            currentMove = (bottomLeftCoordinate, bottomCoordinate)
-                                        #bottom left (2)
-                                        elif((leftCoordinate, currCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
-                                        and (bottomCoordinate, bottomLeftCoordinate) in self.listOfMoves):
-                                            #close right line
-                                            currentMove = (currCoordinate, bottomCoordinate)
-                                    #checking right
-                                        #bottom right (1)
-                                        elif((rightCoordinate, currCoordinate) in self.listOfMoves
-                                        and (currCoordinate, bottomCoordinate) in self.listOfMoves
-                                        and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves):
-                                            #close bottom line
-                                            currentMove = (bottomCoordinate, bottomRightCoordinate)
-                                        #bottom right (2)
-                                        elif((currCoordinate, rightCoordinate) in self.listOfMoves
-                                        and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves
-                                        and (bottomRightCoordinate, bottomCoordinate) in self.listOfMoves):
-                                            #close left line
-                                            currentMove = (currCoordinate, bottomCoordinate)
-
-                                    #if x = 0 & y > 0, check top right and bottom right
-                                    elif c == 0 and r > 0 and r < 9:
-                                        #top right (1)
-                                        if ((rightCoordinate, topRightCoordinate) in self.listOfMoves
-                                        and (topCoordinate, topRightCoordinate) in self.listOfMoves
-                                        and (currCoordinate, rightCoordinate) in self.listOfMoves):
-                                            #close left line
-                                            currentMove = (currCoordinate, topCoordinate)
-                                        #top right (2)
-                                        elif ((rightCoordinate, topRightCoordinate) in self.listOfMoves
-                                        and (topCoordinate, topRightCoordinate) in self.listOfMoves
-                                        and (currCoordinate, topCoordinate) in self.listOfMoves):
-                                            #close bottom line
-                                            currentMove = (currCoordinate, rightCoordinate)
-                                        #bottom right (1)
-                                        elif((rightCoordinate, currCoordinate) in self.listOfMoves
-                                        and (currCoordinate, bottomCoordinate) in self.listOfMoves
-                                        and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves):
-                                            #close bottom line
-                                            currentMove = (bottomCoordinate, bottomRightCoordinate)
-                                        #bottom right (2)
-                                        elif((currCoordinate, rightCoordinate) in self.listOfMoves
-                                        and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves
-                                        and (bottomRightCoordinate, bottomCoordinate) in self.listOfMoves):
-                                            #close left line
-                                            currentMove = (currCoordinate, bottomCoordinate)
+                                #if r = 0 & c > 0, check bottom left and bottom right
+                                elif self.r == 0 and self.c > 0 and self.c < 9:
+                                #checking left
+                                    #bottom left (1)
+                                    if((currCoordinate, leftCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
+                                    and (currCoordinate, bottomCoordinate) in self.listOfMoves):
+                                        #close bottom line
+                                        self.currentMove = (bottomLeftCoordinate, bottomCoordinate)
                                         
-                                    #if y = 9 & x > 0, check top right and top left
-                                    elif r == 9 and c > 0 and c < 9:
-                                        #top right (1)
-                                        if ((rightCoordinate, topRightCoordinate) in self.listOfMoves
-                                        and (topCoordinate, topRightCoordinate) in self.listOfMoves
-                                        and (currCoordinate, rightCoordinate) in self.listOfMoves):
-                                            #close left line
-                                            currentMove = (currCoordinate, topCoordinate)
-                                        #top right (2)
-                                        elif ((rightCoordinate, topRightCoordinate) in self.listOfMoves
-                                        and (topCoordinate, topRightCoordinate) in self.listOfMoves
-                                        and (currCoordinate, topCoordinate) in self.listOfMoves):
-                                            #close bottom line
-                                            currentMove = (currCoordinate, rightCoordinate)
-                                        #top left (1)
-                                        if ((topLeftCoordinate, topCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, topLeftCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, currCoordinate) in self.listOfMoves):
-                                            #close rigt of box
-                                            currentMove = (currCoordinate, topCoordinate)
-                                        #top left (2)
-                                        elif ((currCoordinate, topCoordinate) in self.listOfMoves
-                                        and (topLeftCoordinate, topCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, topLeftCoordinate)):
-                                            #close bottom of box
-                                            currentMove = (bottomLeftCoordinate, currCoordinate)
+                                    #bottom left (2)
+                                    elif((leftCoordinate, currCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
+                                    and (bottomCoordinate, bottomLeftCoordinate) in self.listOfMoves):
+                                        #close right line
+                                        self.currentMove = (currCoordinate, bottomCoordinate)
+                                        
+                                #checking right
+                                    #bottom right (1)
+                                    elif((rightCoordinate, currCoordinate) in self.listOfMoves
+                                    and (currCoordinate, bottomCoordinate) in self.listOfMoves
+                                    and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves):
+                                        #close bottom line
+                                        self.currentMove = (bottomCoordinate, bottomRightCoordinate)
+                                        
+                                    #bottom right (2)
+                                    elif((currCoordinate, rightCoordinate) in self.listOfMoves
+                                    and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves
+                                    and (bottomRightCoordinate, bottomCoordinate) in self.listOfMoves):
+                                        #close left line
+                                        self.currentMove = (currCoordinate, bottomCoordinate)
+                                        
 
-                                    #if x = 9 & y > 0, check top and bottom left
-                                    elif c == 9 and r > 0 and r < 9:
-                                        #top left (1)
-                                        if ((topLeftCoordinate, topCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, topLeftCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, currCoordinate) in self.listOfMoves):
-                                            #close rigt of box
-                                            currentMove = (currCoordinate, topCoordinate)
-                                        #top left (2)
-                                        elif ((currCoordinate, topCoordinate) in self.listOfMoves
-                                        and (topLeftCoordinate, topCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, topLeftCoordinate)):
-                                            #close bottom of box
-                                            currentMove = (bottomLeftCoordinate, currCoordinate)
-                                        #bottom left (1)
-                                        if((currCoordinate, leftCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
-                                        and (currCoordinate, bottomCoordinate) in self.listOfMoves):
-                                            #close bottom line
-                                            currentMove = (bottomLeftCoordinate, bottomCoordinate)
-                                        #bottom left (2)
-                                        elif((leftCoordinate, currCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
-                                        and (bottomCoordinate, bottomLeftCoordinate) in self.listOfMoves):
-                                            #close right line
-                                            currentMove = (currCoordinate, bottomCoordinate)
+                                #if c = 0 & r > 0, check top right and bottom right
+                                elif self.c == 0 and self.r > 0 and self.r < 9:
+                                    #top right (1)
+                                    if ((rightCoordinate, topRightCoordinate) in self.listOfMoves
+                                    and (topCoordinate, topRightCoordinate) in self.listOfMoves
+                                    and (currCoordinate, rightCoordinate) in self.listOfMoves):
+                                        #close left line
+                                        self.currentMove = (currCoordinate, topCoordinate)
+                                        
+                                    #top right (2)
+                                    elif ((rightCoordinate, topRightCoordinate) in self.listOfMoves
+                                    and (topCoordinate, topRightCoordinate) in self.listOfMoves
+                                    and (currCoordinate, topCoordinate) in self.listOfMoves):
+                                        #close bottom line
+                                        self.currentMove = (currCoordinate, rightCoordinate)
+                                        
+                                    #bottom right (1)
+                                    elif((rightCoordinate, currCoordinate) in self.listOfMoves
+                                    and (currCoordinate, bottomCoordinate) in self.listOfMoves
+                                    and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves):
+                                        #close bottom line
+                                        self.currentMove = (bottomCoordinate, bottomRightCoordinate)
+                                        
+                                    #bottom right (2)
+                                    elif((currCoordinate, rightCoordinate) in self.listOfMoves
+                                    and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves
+                                    and (bottomRightCoordinate, bottomCoordinate) in self.listOfMoves):
+                                        #close left line
+                                        self.currentMove = (currCoordinate, bottomCoordinate)
+                                        
+                                    
+                                #if r = 9 & c > 0, check top right and top left
+                                elif self.r == 9 and self.c > 0 and self.c < 9:
+                                    #top right (1)
+                                    if ((rightCoordinate, topRightCoordinate) in self.listOfMoves
+                                    and (topCoordinate, topRightCoordinate) in self.listOfMoves
+                                    and (currCoordinate, rightCoordinate) in self.listOfMoves):
+                                        #close left line
+                                        self.currentMove = (currCoordinate, topCoordinate)
+                                        
+                                    #top right (2)
+                                    elif ((rightCoordinate, topRightCoordinate) in self.listOfMoves
+                                    and (topCoordinate, topRightCoordinate) in self.listOfMoves
+                                    and (currCoordinate, topCoordinate) in self.listOfMoves):
+                                        #close bottom line
+                                        self.currentMove = (currCoordinate, rightCoordinate)
+                                        
+                                    #top left (1)
+                                    if ((topLeftCoordinate, topCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, topLeftCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, currCoordinate) in self.listOfMoves):
+                                        #close right of box
+                                        self.currentMove = (currCoordinate, topCoordinate)
+                                        
+                                    #top left (2)
+                                    elif ((currCoordinate, topCoordinate) in self.listOfMoves
+                                    and (topLeftCoordinate, topCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, topLeftCoordinate)):
+                                        #close bottom of box
+                                        self.currentMove = (bottomLeftCoordinate, currCoordinate)
+                                        
 
-                                    #if x = 9 & y = 0, check bottom left
-                                    elif c == 9 and r == 0:
-                                        #bottom left (1)
-                                        if((currCoordinate, leftCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
-                                        and (currCoordinate, bottomCoordinate) in self.listOfMoves):
-                                            #close bottom line
-                                            currentMove = (bottomLeftCoordinate, bottomCoordinate)
-                                        #bottom left (2)
-                                        elif((leftCoordinate, currCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
-                                        and (bottomCoordinate, bottomLeftCoordinate) in self.listOfMoves):
-                                            #close right line
-                                            currentMove = (currCoordinate, bottomCoordinate)
+                                #if c = 9 & r > 0, check top and bottom left
+                                elif self.c == 9 and self.r > 0 and self.r < 9:
+                                    #top left (1)
+                                    if ((topLeftCoordinate, topCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, topLeftCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, currCoordinate) in self.listOfMoves):
+                                        #close rigt of box
+                                        self.currentMove = (currCoordinate, topCoordinate)
+                                        if self.c == 9:
+                                            self.r = self.r+1
+                                    #top left (2)
+                                    elif ((currCoordinate, topCoordinate) in self.listOfMoves
+                                    and (topLeftCoordinate, topCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, topLeftCoordinate)):
+                                        #close bottom of box
+                                        self.currentMove = (bottomLeftCoordinate, currCoordinate)
+                                        if self.c == 9:
+                                            self.r = self.r+1
+                                    #bottom left (1)
+                                    if((currCoordinate, leftCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
+                                    and (currCoordinate, bottomCoordinate) in self.listOfMoves):
+                                        #close bottom line
+                                        self.currentMove = (bottomLeftCoordinate, bottomCoordinate)
+                                        if self.c == 9:
+                                            self.r = self.r+1
+                                    #bottom left (2)
+                                    elif((leftCoordinate, currCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
+                                    and (bottomCoordinate, bottomLeftCoordinate) in self.listOfMoves):
+                                        #close right line
+                                        self.currentMove = (currCoordinate, bottomCoordinate)
+                                        if self.c == 9:
+                                            self.r = self.r+1
 
-                                    #if y = 9 & x = 0, check top right
-                                    elif r == 9 and c == 0:
-                                        #top right (1)
-                                        if ((rightCoordinate, topRightCoordinate) in self.listOfMoves
-                                        and (topCoordinate, topRightCoordinate) in self.listOfMoves
-                                        and (currCoordinate, rightCoordinate) in self.listOfMoves):
-                                            #close left line
-                                            currentMove = (currCoordinate, topCoordinate)
-                                        #top right (2)
-                                        elif ((rightCoordinate, topRightCoordinate) in self.listOfMoves
-                                        and (topCoordinate, topRightCoordinate) in self.listOfMoves
-                                        and (currCoordinate, topCoordinate) in self.listOfMoves):
-                                            #close bottom line
-                                            currentMove = (currCoordinate, rightCoordinate)
+                                #if c = 9 & r = 0, check bottom left
+                                elif self.c == 9 and self.r == 0:
+                                    #bottom left (1)
+                                    if((currCoordinate, leftCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
+                                    and (currCoordinate, bottomCoordinate) in self.listOfMoves):
+                                        #close bottom line
+                                        self.currentMove = (bottomLeftCoordinate, bottomCoordinate)
+                                        if self.c == 9:
+                                            self.r = self.r+1
+                                    #bottom left (2)
+                                    elif((leftCoordinate, currCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
+                                    and (bottomCoordinate, bottomLeftCoordinate) in self.listOfMoves):
+                                        #close right line
+                                        self.currentMove = (currCoordinate, bottomCoordinate)
+                                        if self.c == 9:
+                                            self.r = self.r+1
 
-                                    #check all quadrants
-                                    elif r > 0 and  r < 9 and c > 0 and  c < 9:
-                                        #top right (1)
-                                        if ((rightCoordinate, topRightCoordinate) in self.listOfMoves
-                                        and (topCoordinate, topRightCoordinate) in self.listOfMoves
-                                        and (currCoordinate, rightCoordinate) in self.listOfMoves):
-                                            #close left line
-                                            currentMove = (currCoordinate, topCoordinate)
-                                        #top right (2)
-                                        elif ((rightCoordinate, topRightCoordinate) in self.listOfMoves
-                                        and (topCoordinate, topRightCoordinate) in self.listOfMoves
-                                        and (currCoordinate, topCoordinate) in self.listOfMoves):
-                                            #close bottom line
-                                            currentMove = (currCoordinate, rightCoordinate)
-                                        #top left (1)
-                                        if ((topLeftCoordinate, topCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, topLeftCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, currCoordinate) in self.listOfMoves):
-                                            #close rigt of box
-                                            currentMove = (currCoordinate, topCoordinate)
-                                        #top left (2)
-                                        elif ((currCoordinate, topCoordinate) in self.listOfMoves
-                                        and (topLeftCoordinate, topCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, topLeftCoordinate)):
-                                            #close bottom of box
-                                            currentMove = (bottomLeftCoordinate, currCoordinate)
-                                        #bottom left (1)
-                                        if((currCoordinate, leftCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
-                                        and (currCoordinate, bottomCoordinate) in self.listOfMoves):
-                                            #close bottom line
-                                            currentMove = (bottomLeftCoordinate, bottomCoordinate)
-                                        #bottom left (2)
-                                        elif((leftCoordinate, currCoordinate) in self.listOfMoves
-                                        and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
-                                        and (bottomCoordinate, bottomLeftCoordinate) in self.listOfMoves):
-                                            #close right line
-                                            currentMove = (currCoordinate, bottomCoordinate)
-                                        #bottom right (1)
-                                        elif((rightCoordinate, currCoordinate) in self.listOfMoves
-                                        and (currCoordinate, bottomCoordinate) in self.listOfMoves
-                                        and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves):
-                                            #close bottom line
-                                            currentMove = (bottomCoordinate, bottomRightCoordinate)
-                                        #bottom right (2)
-                                        elif((currCoordinate, rightCoordinate) in self.listOfMoves
-                                        and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves
-                                        and (bottomRightCoordinate, bottomCoordinate) in self.listOfMoves):
-                                            #close left line
-                                            currentMove = (currCoordinate, bottomCoordinate)
+                                #if r = 9 & c = 0, check top right
+                                elif self.r == 9 and self.c == 0:
+                                    #top right (1)
+                                    if ((rightCoordinate, topRightCoordinate) in self.listOfMoves
+                                    and (topCoordinate, topRightCoordinate) in self.listOfMoves
+                                    and (currCoordinate, rightCoordinate) in self.listOfMoves):
+                                        #close left line
+                                        self.currentMove = (currCoordinate, topCoordinate)
+                                        
+                                    #top right (2)
+                                    elif ((rightCoordinate, topRightCoordinate) in self.listOfMoves
+                                    and (topCoordinate, topRightCoordinate) in self.listOfMoves
+                                    and (currCoordinate, topCoordinate) in self.listOfMoves):
+                                        #close bottom line
+                                        self.currentMove = (currCoordinate, rightCoordinate)
+                                        
+                                    
 
-                                    if currCoordinate[c][r] == (9,9):
-                                        self.n = self.n+1
-                                    #once loop runs and doesn't find a square to close, n++
-                        #if the currentMove has changed, a box has been located
+                                #check all quadrants
+                                elif self.r > 0 and  self.r < 9 and self.c > 0 and  self.c < 9:
+                                    #top right (1)
+                                    if ((rightCoordinate, topRightCoordinate) in self.listOfMoves
+                                    and (topCoordinate, topRightCoordinate) in self.listOfMoves
+                                    and (currCoordinate, rightCoordinate) in self.listOfMoves):
+                                        #close left line
+                                        self.currentMove = (currCoordinate, topCoordinate)
+                                    #top right (2)
+                                    elif ((rightCoordinate, topRightCoordinate) in self.listOfMoves
+                                    and (topCoordinate, topRightCoordinate) in self.listOfMoves
+                                    and (currCoordinate, topCoordinate) in self.listOfMoves):
+                                        #close bottom line
+                                        self.currentMove = (currCoordinate, rightCoordinate)
+                                    #top left (1)
+                                    if ((topLeftCoordinate, topCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, topLeftCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, currCoordinate) in self.listOfMoves):
+                                        #close rigt of box
+                                        self.currentMove = (currCoordinate, topCoordinate)
+                                    #top left (2)
+                                    elif ((currCoordinate, topCoordinate) in self.listOfMoves
+                                    and (topLeftCoordinate, topCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, topLeftCoordinate)):
+                                        #close bottom of box
+                                        self.currentMove = (bottomLeftCoordinate, currCoordinate)
+                                    #bottom left (1)
+                                    if((currCoordinate, leftCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
+                                    and (currCoordinate, bottomCoordinate) in self.listOfMoves):
+                                        #close bottom line
+                                        self.currentMove = (bottomLeftCoordinate, bottomCoordinate)
+                                    #bottom left (2)
+                                    elif((leftCoordinate, currCoordinate) in self.listOfMoves
+                                    and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
+                                    and (bottomCoordinate, bottomLeftCoordinate) in self.listOfMoves):
+                                        #close right line
+                                        self.currentMove = (currCoordinate, bottomCoordinate)
+                                    #bottom right (1)
+                                    elif((rightCoordinate, currCoordinate) in self.listOfMoves
+                                    and (currCoordinate, bottomCoordinate) in self.listOfMoves
+                                    and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves):
+                                        #close bottom line
+                                        self.currentMove = (bottomCoordinate, bottomRightCoordinate)
+                                    #bottom right (2)
+                                    elif((currCoordinate, rightCoordinate) in self.listOfMoves
+                                    and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves
+                                    and (bottomRightCoordinate, bottomCoordinate) in self.listOfMoves):
+                                        #close left line
+                                        self.currentMove = (currCoordinate, bottomCoordinate)
+
+                                if self.c == 9 and self.r != 9:
+                                    self.r = self.r+1
+                                if currCoordinate == (9,9):
+                                    n = n+1
+                                    self.r = self.r+1
+                                    
+                                #once loop runs and doesn't find a square to close, n++
+                    #if the currentMove has changed, a box has been located
                         #write that move to the file using corresponding players name
-                        if currentMove != ((0,0), (0,0)) and os.path.exists('./Megan.go'):
+                        if self.currentMove != ((0,0), (0,0)) and os.path.exists('./Megan.go'):
+                                    #append current move
+                                    self.listOfMoves.append(self.currentMove)
                                     File_object = open("move_file", "w")
-                                    File_object.write("Megan " +currentMove)
+                                    File_object.write("Megan " +self.currentMove)
                                     File_object.close()
-                                    n = 0
                                     time.sleep(.1)
-                        elif currentMove != ((0,0), (0,0)) and os.path.exists('./Michael.go'):
+                        elif self.currentMove != ((0,0), (0,0)) and os.path.exists('./Michael.go'):
+                                    #append current move
+                                    self.listOfMoves.append(self.currentMove)
                                     File_object = open("move_file", "w")
-                                    File_object.write("Michael " +currentMove)
+                                    File_object.write("Michael " +self.currentMove)
                                     File_object.close()
-                                    n = 0
+                                    #n = 0
                                     time.sleep(.1)
                         #case where the move hasn't changed -> go into the decide move function
                         else:
+                            print("there are no boxes to close")
+                            n = 0
                             self.decideMove(self.board, self.cordEdges)
                 time.sleep(.5)
-        #else:
+        else:
+                print("you are in else statement")
                 #First check if an end game file exists
-        #        if os.path.exists('./end_game.py'):
+                if os.path.exists('./end_game.py'):
                     #Display the end result of the game -> read the file because it has the end result of the game
-        #            File_object = open("end_game.py", "r")
-        #            File_object.read()
+                    File_object = open("end_game.py", "r")
+                    File_object.read()
                 #Only runs on the first turn and there is nothing in the move file
-        #        elif os.stat("move_file").st_size == 0:
-        #            self.decideMove(self.board, self.cordEdges)
+                elif os.stat("move_file").st_size == 0:
+                    self.decideMove(self.board, self.cordEdges)
                 #If not the end of the game
-        #        else:
+                else:
                     #Read the opponents move from move_file
-                #    File_object = open("move_file", "r")
-                #    File_object.read()
-        #            self.decideMove(self.board, self.cordEdges)    
+                    File_object = open("move_file", "r")
+                    File_object.read()
+                    self.decideMove(self.board, self.cordEdges)    
 
     #Takes in current board and last move
     #board = 9x9 of board coordinates in (x,y)

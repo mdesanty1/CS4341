@@ -5,6 +5,7 @@ import pygame
 import os.path
 import time
 from os.path import exists
+import sys
 
 class MandM:
     #Initialize 9x9 that tells you how many edges are at the corresponding coordinate
@@ -33,11 +34,12 @@ class MandM:
     x = 0
     c = 0
     r = 0
-    #n = 0
+    y = 0
     #initialize a current move variable for checking if boxes are taken
     currentMove = ((0,0), (0,0))
 
     def __init__(self):
+        sys.setrecursionlimit(10000)
         #Define board coordinates
         self.board = [[(0,0), (0,1), (0,2), (0,3), (0,4), (0,5), (0,6), (0,7), (0,8), (0,9)], 
                       [(1,0), (1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9)],
@@ -50,15 +52,10 @@ class MandM:
                       [(8,0), (8,1), (8,2), (8,3), (8,4), (8,5), (8,6), (8,7), (8,8), (8,9)],
                       [(9,0), (9,1), (9,2), (9,3), (9,4), (9,5), (9,6), (9,7), (9,8), (9,9)]]
 
-        #self.decideMove(self.board, self.cordEdges)
-        #If player 1 or player 2 files don't exist
-        #if(os.path.exists('./Megan.go') == False and os.path.exists('./Michael.go') == False):
-        #n is the variable that will tell us when the file exists
-        #n = 0 means neither go files exist
-        #n = 0  
+        #If not the end of the game, wait for go files
         while(os.path.exists('./end_game.py' == False)):
             #if a go file exists OR a pass file (because we want the player to go through the same process)
-            if os.path.exists('./Megan.go') or os.path.exists('./Michael.go') or os.path.exists('./Megan.pass') or os.path.exists('./Michael.pass'):
+            if os.path.exists('./Megan.go') or os.path.exists('./Michael.go'):
                 #set n to 1 saying that the go file or pass file exists
                 #First check if an end game file exists
                 if os.path.exists('./end_game.py'):
@@ -73,12 +70,9 @@ class MandM:
                     #if there are no boxes to close, run the decideMove function
                     #if there are boxes to close, write that move to the file and set n = 0 to re-loop
                 else:
-                    #print("there's no end game file")
                     #Loop to check if there are any boxes to close
-                    #if n == 0:
                     while self.r <= 9:
                         for self.c in range(0,10):
-                            #print("checking if there are boxes to close")
                             #set coordinates to reference when determining if we can close a box
                             currCoordinate = self.board[self.c][self.r]
                             if self.c > 0 and self.r > 0:
@@ -103,35 +97,45 @@ class MandM:
                                 #bottom right (1)
                                 if ((rightCoordinate, bottomRightCoordinate) in self.listOfMoves
                                 and (bottomCoordinate, bottomRightCoordinate) in self.listOfMoves
-                                and (currCoordinate, bottomCoordinate) in self.listOfMoves):
+                                and (currCoordinate, bottomCoordinate) in self.listOfMoves
+                                and (currCoordinate, rightCoordinate) not in self.listOfMoves):
                                     self.currentMove = (currCoordinate, rightCoordinate)
                                     reverse = (rightCoordinate, currCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                 #bottom right (2)
                                 elif ((rightCoordinate, bottomRightCoordinate) in self.listOfMoves
                                 and (bottomCoordinate, bottomRightCoordinate) in self.listOfMoves
-                                and (currCoordinate, rightCoordinate) in self.listOfMoves):
+                                and (currCoordinate, rightCoordinate) in self.listOfMoves
+                                and (currCoordinate, bottomCoordinate) not in self.listOfMoves):
                                     self.currentMove = (currCoordinate, bottomCoordinate)
                                     reverse = (bottomCoordinate, currCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                             #if r = 9 & c = 9, check top left box (Q2)
                             elif self.r == 9 and self.c == 9:
                                 #top left (1)
                                 if ((topLeftCoordinate, topCoordinate) in self.listOfMoves
                                 and (leftCoordinate, topLeftCoordinate) in self.listOfMoves
-                                and (leftCoordinate, currCoordinate) in self.listOfMoves):
+                                and (leftCoordinate, currCoordinate) in self.listOfMoves
+                                and (currCoordinate, topCoordinate) not in self.listOfMoves):
                                     #close rigt of box
                                     self.currentMove = (currCoordinate, topCoordinate)
                                     reverse = (topCoordinate, currCoordinate)
-                                    if self.c == 9:
-                                        self.r = self.r+1
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                 #top left (2)
                                 elif ((currCoordinate, topCoordinate) in self.listOfMoves
                                 and (topLeftCoordinate, topCoordinate) in self.listOfMoves
-                                and (leftCoordinate, topLeftCoordinate)):
+                                and (leftCoordinate, topLeftCoordinate) in self.listOfMoves
+                                and (currCoordinate, leftCoordinate) not in self.listOfMoves):
                                     #close bottom of box
                                     self.currentMove = (leftCoordinate, currCoordinate)
                                     reverse = (currCoordinate, leftCoordinate)
-                                    if self.c == 9:
-                                        self.r = self.r+1
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
 
                             #if r = 0 & c > 0, check bottom left and bottom right
                             elif self.r == 0 and self.c > 0 and self.c < 9:
@@ -139,35 +143,51 @@ class MandM:
                                 #bottom left (1)
                                 if((currCoordinate, leftCoordinate) in self.listOfMoves
                                 and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
-                                and (currCoordinate, bottomCoordinate) in self.listOfMoves):
+                                and (currCoordinate, bottomCoordinate) in self.listOfMoves
+                                and (bottomLeftCoordinate, bottomCoordinate) not in self.listOfMoves):
                                     #close bottom line
                                     self.currentMove = (bottomLeftCoordinate, bottomCoordinate)
                                     reverse = (bottomCoordinate, bottomLeftCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                     
                                 #bottom left (2)
                                 elif((leftCoordinate, currCoordinate) in self.listOfMoves
                                 and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
-                                and (bottomCoordinate, bottomLeftCoordinate) in self.listOfMoves):
+                                and (bottomCoordinate, bottomLeftCoordinate) in self.listOfMoves
+                                and (currCoordinate, bottomCoordinate) not in self.listOfMoves):
                                     #close right line
                                     self.currentMove = (currCoordinate, bottomCoordinate)
                                     reverse = (bottomCoordinate, currCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                     
                             #checking right
                                 #bottom right (1)
                                 elif((rightCoordinate, currCoordinate) in self.listOfMoves
                                 and (currCoordinate, bottomCoordinate) in self.listOfMoves
-                                and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves):
+                                and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves
+                                and (bottomCoordinate, bottomRightCoordinate) not in self.listOfMoves):
                                     #close bottom line
                                     self.currentMove = (bottomCoordinate, bottomRightCoordinate)
                                     reverse = (bottomRightCoordinate, bottomCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                     
                                 #bottom right (2)
                                 elif((currCoordinate, rightCoordinate) in self.listOfMoves
                                 and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves
-                                and (bottomRightCoordinate, bottomCoordinate) in self.listOfMoves):
+                                and (bottomRightCoordinate, bottomCoordinate) in self.listOfMoves
+                                and (currCoordinate, bottomCoordinate) not in self.listOfMoves):
                                     #close left line
                                     self.currentMove = (currCoordinate, bottomCoordinate)
                                     reverse = (bottomCoordinate, currCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                     
 
                             #if c = 0 & r > 0, check top right and bottom right
@@ -175,34 +195,50 @@ class MandM:
                                 #top right (1)
                                 if ((rightCoordinate, topRightCoordinate) in self.listOfMoves
                                 and (topCoordinate, topRightCoordinate) in self.listOfMoves
-                                and (currCoordinate, rightCoordinate) in self.listOfMoves):
+                                and (currCoordinate, rightCoordinate) in self.listOfMoves
+                                and (currCoordinate, topCoordinate) not in self.listOfMoves):
                                     #close left line
                                     self.currentMove = (currCoordinate, topCoordinate)
                                     reverse = (topCoordinate, currCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                     
                                 #top right (2)
                                 elif ((rightCoordinate, topRightCoordinate) in self.listOfMoves
                                 and (topCoordinate, topRightCoordinate) in self.listOfMoves
-                                and (currCoordinate, topCoordinate) in self.listOfMoves):
+                                and (currCoordinate, topCoordinate) in self.listOfMoves
+                                and (currCoordinate, rightCoordinate) not in self.listOfMoves):
                                     #close bottom line
                                     self.currentMove = (currCoordinate, rightCoordinate)
                                     reverse = (rightCoordinate, currCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                     
                                 #bottom right (1)
                                 elif((rightCoordinate, currCoordinate) in self.listOfMoves
                                 and (currCoordinate, bottomCoordinate) in self.listOfMoves
-                                and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves):
+                                and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves
+                                and (bottomCoordinate, bottomRightCoordinate) not in self.listOfMoves):
                                     #close bottom line
                                     self.currentMove = (bottomCoordinate, bottomRightCoordinate)
                                     reverse = (bottomRightCoordinate, bottomCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                     
                                 #bottom right (2)
                                 elif((currCoordinate, rightCoordinate) in self.listOfMoves
                                 and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves
-                                and (bottomRightCoordinate, bottomCoordinate) in self.listOfMoves):
+                                and (bottomRightCoordinate, bottomCoordinate) in self.listOfMoves
+                                and (currCoordinate, bottomCoordinate) not in self.listOfMoves):
                                     #close left line
                                     self.currentMove = (currCoordinate, bottomCoordinate)
                                     reverse = (bottomCoordinate, currCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                     
                                 
                             #if r = 9 & c > 0, check top right and top left
@@ -210,34 +246,50 @@ class MandM:
                                 #top right (1)
                                 if ((rightCoordinate, topRightCoordinate) in self.listOfMoves
                                 and (topCoordinate, topRightCoordinate) in self.listOfMoves
-                                and (currCoordinate, rightCoordinate) in self.listOfMoves):
+                                and (currCoordinate, rightCoordinate) in self.listOfMoves
+                                and (currCoordinate, topCoordinate) not in self.listOfMoves):
                                     #close left line
                                     self.currentMove = (currCoordinate, topCoordinate)
                                     reverse = (topCoordinate, currCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                     
                                 #top right (2)
                                 elif ((rightCoordinate, topRightCoordinate) in self.listOfMoves
                                 and (topCoordinate, topRightCoordinate) in self.listOfMoves
-                                and (currCoordinate, topCoordinate) in self.listOfMoves):
+                                and (currCoordinate, topCoordinate) in self.listOfMoves
+                                and (currCoordinate, rightCoordinate) not in self.listOfMoves):
                                     #close bottom line
                                     self.currentMove = (currCoordinate, rightCoordinate)
                                     reverse = (rightCoordinate, currCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                     
                                 #top left (1)
                                 if ((topLeftCoordinate, topCoordinate) in self.listOfMoves
                                 and (leftCoordinate, topLeftCoordinate) in self.listOfMoves
-                                and (leftCoordinate, currCoordinate) in self.listOfMoves):
+                                and (leftCoordinate, currCoordinate) in self.listOfMoves
+                                and (currCoordinate, topCoordinate) not in self.listOfMoves):
                                     #close right of box
                                     self.currentMove = (currCoordinate, topCoordinate)
                                     reverse = (topCoordinate, currCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                     
                                 #top left (2)
                                 elif ((currCoordinate, topCoordinate) in self.listOfMoves
                                 and (topLeftCoordinate, topCoordinate) in self.listOfMoves
-                                and (leftCoordinate, topLeftCoordinate)):
+                                and (leftCoordinate, topLeftCoordinate) in self.listOfMoves
+                                and (currCoordinate, leftCoordinate) not in self.listOfMoves):
                                     #close bottom of box
                                     self.currentMove = (leftCoordinate, currCoordinate)
                                     reverse = (currCoordinate, leftCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                     
 
                             #if c = 9 & r > 0, check top and bottom left
@@ -245,78 +297,92 @@ class MandM:
                                 #top left (1)
                                 if ((topLeftCoordinate, topCoordinate) in self.listOfMoves
                                 and (leftCoordinate, topLeftCoordinate) in self.listOfMoves
-                                and (leftCoordinate, currCoordinate) in self.listOfMoves):
+                                and (leftCoordinate, currCoordinate) in self.listOfMoves
+                                and (currCoordinate, topCoordinate) not in self.listOfMoves):
                                     #close rigt of box
                                     self.currentMove = (currCoordinate, topCoordinate)
                                     reverse = (topCoordinate, currCoordinate)
-                                    if self.c == 9:
-                                        self.r = self.r+1
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                 #top left (2)
                                 elif ((currCoordinate, topCoordinate) in self.listOfMoves
                                 and (topLeftCoordinate, topCoordinate) in self.listOfMoves
-                                and (leftCoordinate, topLeftCoordinate)):
+                                and (leftCoordinate, topLeftCoordinate) in self.listOfMoves
+                                and (currCoordinate, leftCoordinate) not in self.listOfMoves):
                                     #close bottom of box
                                     self.currentMove = (leftCoordinate, currCoordinate)
                                     reverse = (currCoordinate, leftCoordinate)
-                                    if self.c == 9:
-                                        self.r = self.r+1
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                 #bottom left (1)
                                 if((currCoordinate, leftCoordinate) in self.listOfMoves
                                 and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
-                                and (currCoordinate, bottomCoordinate) in self.listOfMoves):
+                                and (currCoordinate, bottomCoordinate) in self.listOfMoves
+                                and (bottomLeftCoordinate, bottomCoordinate) not in self.listOfMoves):
                                     #close bottom line
                                     self.currentMove = (bottomLeftCoordinate, bottomCoordinate)
                                     reverse = (bottomCoordinate, bottomLeftCoordinate)
-                                    if self.c == 9:
-                                        self.r = self.r+1
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                 #bottom left (2)
                                 elif((leftCoordinate, currCoordinate) in self.listOfMoves
                                 and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
-                                and (bottomCoordinate, bottomLeftCoordinate) in self.listOfMoves):
+                                and (bottomCoordinate, bottomLeftCoordinate) in self.listOfMoves
+                                and (currCoordinate, bottomCoordinate) not in self.listOfMoves):
                                     #close right line
                                     self.currentMove = (currCoordinate, bottomCoordinate)
                                     reverse = (bottomCoordinate, currCoordinate)
-                                    if self.c == 9:
-                                        self.r = self.r+1
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
 
                             #if c = 9 & r = 0, check bottom left
                             elif self.c == 9 and self.r == 0:
                                 #bottom left (1)
                                 if((currCoordinate, leftCoordinate) in self.listOfMoves
                                 and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
-                                and (currCoordinate, bottomCoordinate) in self.listOfMoves):
+                                and (currCoordinate, bottomCoordinate) in self.listOfMoves
+                                and (bottomLeftCoordinate, bottomCoordinate) not in self.listOfMoves):
                                     #close bottom line
                                     self.currentMove = (bottomLeftCoordinate, bottomCoordinate)
                                     reverse = (bottomCoordinate, bottomLeftCoordinate)
-                                    if self.c == 9:
-                                        self.r = self.r+1
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                 #bottom left (2)
                                 elif((leftCoordinate, currCoordinate) in self.listOfMoves
                                 and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
-                                and (bottomCoordinate, bottomLeftCoordinate) in self.listOfMoves):
+                                and (bottomCoordinate, bottomLeftCoordinate) in self.listOfMoves
+                                and (currCoordinate, bottomCoordinate) not in self.listOfMoves):
                                     #close right line
                                     self.currentMove = (currCoordinate, bottomCoordinate)
                                     reverse = (bottomCoordinate, currCoordinate)
-                                    if self.c == 9:
-                                        self.r = self.r+1
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
 
                             #if r = 9 & c = 0, check top right
                             elif self.r == 9 and self.c == 0:
                                 #top right (1)
                                 if ((rightCoordinate, topRightCoordinate) in self.listOfMoves
                                 and (topCoordinate, topRightCoordinate) in self.listOfMoves
-                                and (currCoordinate, rightCoordinate) in self.listOfMoves):
+                                and (currCoordinate, rightCoordinate) in self.listOfMoves
+                                and (currCoordinate, topCoordinate) not in self.listOfMoves):
                                     #close left line
                                     self.currentMove = (currCoordinate, topCoordinate)
                                     reverse = (topCoordinate, currCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                     
                                 #top right (2)
                                 elif ((rightCoordinate, topRightCoordinate) in self.listOfMoves
                                 and (topCoordinate, topRightCoordinate) in self.listOfMoves
-                                and (currCoordinate, topCoordinate) in self.listOfMoves):
+                                and (currCoordinate, topCoordinate) in self.listOfMoves
+                                and (currCoordinate, rightCoordinate) not in self.listOfMoves):
                                     #close bottom line
                                     self.currentMove = (currCoordinate, rightCoordinate)
                                     reverse = (rightCoordinate, currCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                     
                                 
 
@@ -325,59 +391,91 @@ class MandM:
                                 #top right (1)
                                 if ((rightCoordinate, topRightCoordinate) in self.listOfMoves
                                 and (topCoordinate, topRightCoordinate) in self.listOfMoves
-                                and (currCoordinate, rightCoordinate) in self.listOfMoves):
+                                and (currCoordinate, rightCoordinate) in self.listOfMoves
+                                and (currCoordinate, topCoordinate) not in self.listOfMoves):
                                     #close left line
                                     self.currentMove = (currCoordinate, topCoordinate)
                                     reverse = (topCoordinate, currCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                 #top right (2)
                                 elif ((rightCoordinate, topRightCoordinate) in self.listOfMoves
                                 and (topCoordinate, topRightCoordinate) in self.listOfMoves
-                                and (currCoordinate, topCoordinate) in self.listOfMoves):
+                                and (currCoordinate, topCoordinate) in self.listOfMoves
+                                and (currCoordinate, rightCoordinate) not in self.listOfMoves):
                                     #close bottom line
                                     self.currentMove = (currCoordinate, rightCoordinate)
                                     reverse = (rightCoordinate, currCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                 #top left (1)
                                 if ((topLeftCoordinate, topCoordinate) in self.listOfMoves
                                 and (leftCoordinate, topLeftCoordinate) in self.listOfMoves
-                                and (leftCoordinate, currCoordinate) in self.listOfMoves):
+                                and (leftCoordinate, currCoordinate) in self.listOfMoves
+                                and (currCoordinate, topCoordinate) not in self.listOfMoves):
                                     #close rigt of box
                                     self.currentMove = (currCoordinate, topCoordinate)
                                     reverse = (topCoordinate, currCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                 #top left (2)
                                 elif ((currCoordinate, topCoordinate) in self.listOfMoves
                                 and (topLeftCoordinate, topCoordinate) in self.listOfMoves
-                                and (leftCoordinate, topLeftCoordinate)):
+                                and (leftCoordinate, topLeftCoordinate) in self.listOfMoves
+                                and (currCoordinate, leftCoordinate) not in self.listOfMoves):
                                     #close bottom of box
                                     self.currentMove = (leftCoordinate, currCoordinate)
                                     reverse = (currCoordinate, leftCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                 #bottom left (1)
                                 if((currCoordinate, leftCoordinate) in self.listOfMoves
                                 and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
-                                and (currCoordinate, bottomCoordinate) in self.listOfMoves):
+                                and (currCoordinate, bottomCoordinate) in self.listOfMoves
+                                and (bottomLeftCoordinate, bottomCoordinate) not in self.listOfMoves):
                                     #close bottom line
                                     self.currentMove = (bottomLeftCoordinate, bottomCoordinate)
                                     reverse = (bottomCoordinate, bottomLeftCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                 #bottom left (2)
                                 elif((leftCoordinate, currCoordinate) in self.listOfMoves
                                 and (leftCoordinate, bottomLeftCoordinate) in self.listOfMoves
-                                and (bottomCoordinate, bottomLeftCoordinate) in self.listOfMoves):
+                                and (bottomCoordinate, bottomLeftCoordinate) in self.listOfMoves
+                                and (currCoordinate, bottomCoordinate) not in self.listOfMoves):
                                     #close right line
                                     self.currentMove = (currCoordinate, bottomCoordinate)
                                     reverse = (bottomCoordinate, currCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                 #bottom right (1)
                                 elif((rightCoordinate, currCoordinate) in self.listOfMoves
                                 and (currCoordinate, bottomCoordinate) in self.listOfMoves
-                                and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves):
+                                and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves
+                                and (bottomCoordinate, bottomRightCoordinate) not in self.listOfMoves):
                                     #close bottom line
                                     self.currentMove = (bottomCoordinate, bottomRightCoordinate)
                                     reverse = (bottomRightCoordinate, bottomCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
                                 #bottom right (2)
                                 elif((currCoordinate, rightCoordinate) in self.listOfMoves
                                 and (rightCoordinate, bottomRightCoordinate) in self.listOfMoves
-                                and (bottomRightCoordinate, bottomCoordinate) in self.listOfMoves):
+                                and (bottomRightCoordinate, bottomCoordinate) in self.listOfMoves
+                                and (currCoordinate, bottomCoordinate) not in self.listOfMoves):
                                     #close left line
                                     self.currentMove = (currCoordinate, bottomCoordinate)
                                     reverse = (bottomCoordinate, currCoordinate)
+                                    #TEST
+                                    # if self.c == 9:
+                                    #     self.r = self.r+1
 
                             if self.c == 9 and self.r != 9:
                                 self.r = self.r+1
@@ -388,6 +486,7 @@ class MandM:
                     #if the currentMove has changed, a box has been located
                     #write that move to the file using corresponding players name
                     if self.currentMove != ((0,0), (0,0)) and os.path.exists('./Megan.go'):
+                                #If the current move or reverse is in list of moves, then reset rows and columns back to zero and run decide move fxn
                                 if self.currentMove in self.listOfMoves or reverse in self.listOfMoves:
                                     print("box is already closed")
                                     self.r = 0
@@ -395,11 +494,8 @@ class MandM:
                                     self.decideMove(self.board, self.cordEdges)
                                 else:
                                     chosenMoveStr = str(self.currentMove)
-                                    #((0,0), (1,0))
                                     chosenMoveNoP = chosenMoveStr.replace("(","")
                                     chosenMoveNoP2 = chosenMoveNoP.replace(")","")
-                                    #0, 0, 1, 0
-                                    #0123456789
                                     chosenMoveFirst = chosenMoveNoP2[0:3]
                                     chosenMoveFirstFixed = chosenMoveFirst.replace(" ","")
                                     chosenMoveSpace = chosenMoveNoP2[3:5]
@@ -408,6 +504,7 @@ class MandM:
                                     chosenMoveSecondFixed = chosenMoveSecond.replace(" ","")
                                     chosenMoveReal = chosenMoveFirstFixed + chosenMoveSpaceFixed + chosenMoveSecondFixed
                                     #append current move
+                                    time.sleep(.1)
                                     print(chosenMoveReal)
                                     self.listOfMoves.append(self.currentMove)
                                     self.listOfMoves.append(reverse)
@@ -417,6 +514,7 @@ class MandM:
                                     self.r = 0
                                     self.c = 0
                                     time.sleep(.1)
+                    #If the current move isn't the top left corner and the go file exists
                     elif self.currentMove != ((0,0), (0,0)) and os.path.exists('./Michael.go'):
                                 if self.currentMove in self.listOfMoves or reverse in self.listOfMoves:
                                     print("box is already closed")
@@ -425,11 +523,8 @@ class MandM:
                                     self.decideMove(self.board, self.cordEdges)
                                 else:
                                     chosenMoveStr = str(self.currentMove)
-                                    #((0,0), (1,0))
                                     chosenMoveNoP = chosenMoveStr.replace("(","")
                                     chosenMoveNoP2 = chosenMoveNoP.replace(")","")
-                                    #0, 0, 1, 0
-                                    #0123456789
                                     chosenMoveFirst = chosenMoveNoP2[0:3]
                                     chosenMoveFirstFixed = chosenMoveFirst.replace(" ","")
                                     chosenMoveSpace = chosenMoveNoP2[3:5]
@@ -437,7 +532,7 @@ class MandM:
                                     chosenMoveSecond = chosenMoveNoP2[5:10]
                                     chosenMoveSecondFixed = chosenMoveSecond.replace(" ","")
                                     chosenMoveReal = chosenMoveFirstFixed + chosenMoveSpaceFixed + chosenMoveSecondFixed
-                                    #append current mo
+                                    time.sleep(.1)
                                     print(chosenMoveReal)
                                     self.listOfMoves.append(self.currentMove)
                                     self.listOfMoves.append(reverse)
@@ -453,6 +548,18 @@ class MandM:
                         self.r = 0
                         self.c = 0
                         self.decideMove(self.board, self.cordEdges)
+            elif os.path.exists('./Michael.pass'):
+                time.sleep(.1)
+                File_object = open("move_file", "w")
+                File_object.write("Michael 0,0 0,0")
+                File_object.close()
+                time.sleep(.1)
+            elif os.path.exists('./Megan.pass'):
+                time.sleep(.1)
+                File_object = open("move_file", "w")
+                File_object.write("Megan 0,0 0,0")
+                File_object.close()
+                time.sleep(.1)
             else:
                 continue
             time.sleep(.1)
@@ -476,47 +583,42 @@ class MandM:
                     #self.decideMove(self.board, self.cordEdges)    
 
     #Takes in current board and last move
-    #board = 9x9 of board coordinates in (x,y)
-    #lastMove = (x1,y1) (x2, y2) of move made
     #listOfMoves = list of lastMove 's made
-    #cordEdges = 9x9 array that tells you how many edges are attached to that specific coordinate
-        #Helps AI in determining where to go (Iterative deepening heuristic that looks for coordinates with 0 or 1 edges connected)
+    #Helps AI in determining where to go (Iterative deepening heuristic that looks for coordinates with 0 or 1 edges connected)
     def decideMove(self, board, cordEdges):
-        #print("in decide move")
-        #lastMove, listOfMoves ^ add back if we need
-        #Opens file with all players moves
-        #File_object = open("move_file", "r")
-        #File_object.close()
-        #self.board.get(edge) is used in game.py to see if an edge is taken or not
-        #to determine if there is an edge connecting two coordinates, traverse through listOfMoves
-        #if we can get the edges, we can store them in an array to keep track
-        #when adding r and c values to the list, add them all separately and then append
-        #^ append r1 and c1 together, append r2 and c2 together
-        #can then search through the list to find the individual edges)
-        #myList = [1,2,2,1]
-        #myList.append((1,2))
-        #myList.append((2,1))
-        #myList.append(((1,2), (2,1)))
 
         #Minimax algo:
         #Explore all options -> store the number of boxes each route captures
         #Start checking the board from left to right, starting at row 0, then row 1, etc
         
+        #while column is on the board
         while self.x <= 9:
-            for y in range(0,10):
+            #while row is on the board
+            for self.y in range(0,10):
+                if os.path.exists('./end_game.py'):
+                    #Display the end result of the game -> read the file because it has the end result of the game
+                    #setting n = 1 should break out of while loop
+                    File_object = open("end_game.py", "r")
+                    File_object.read()
                 #Check to see if a box can be closed before anything else
                 #Check edges around the point (in a 3x3 grid) to see if the edges are taken
                 #Check left then right then up then down
                 #check number of edges at the given coordinate
                 #The first time it runs
 
-                if board[self.x][y] == (0,0) and cordEdges[0][0] == 0:
+                #Starting case when at top left corner
+                #If it's the first time running through, there shouldn't be any cord edges
+                if board[self.x][self.y] == (0,0) and cordEdges[0][0] == 0:
+                    #set to max previous number of edges
                     prevNumEdges = 4
                     numEdges = 0
-                elif board[self.x][y] == (0,0) and cordEdges[0][0] == 1:
+                #if at top left corner and there is one edge connecting 
+                #this means there is only one way the edges can connect
+                elif board[self.x][self.y] == (0,0) and cordEdges[0][0] == 1:
                     prevNumEdges = 4
                     numEdges = 0
-                elif board[self.x][y] == (0,0) and cordEdges[0][0] >= 2:
+                #if at top left corner and there's at least two edges connecting to that point
+                elif board[self.x][self.y] == (0,0) and cordEdges[0][0] >= 2:
                     prevNumEdges = cordEdges[0][0]
                     numEdges = cordEdges[1][0]
                 #elif self.x == 0 and not y == 0:
@@ -525,87 +627,85 @@ class MandM:
                 #elif y == 0 and not self.x== 0:
                     #prevNumEdges = cordEdges[self.x-1][9]
                     #numEdges = cordEdges[self.x][y]
+                #If not at start coordinate
                 else:
-                    numEdges = cordEdges[self.x][y]
-                    #Check if the previous move has less edges than the current one being explored
-                    #Else: run through for loop again until it does
-                    #This alpha beta pruning: prunes the other options
+                    numEdges = cordEdges[self.x][self.y]
+                #Check if current number of edges is less than the previous
+                #Else: run through for loop again until it does
+                #This alpha beta pruning: prunes the other options
                 if(prevNumEdges > numEdges):
                     #If it does, set the current move
-                    currCoordinate = board[self.x][y]
-                    #When the algo comes to a node, check horizontal options first then vertical (MUST CHECK BOTH)
-                    
+                    currCoordinate = board[self.x][self.y]                    
                     #Case 1: x & y = 0 (can't look left or above)
-                    if self.x == 0 and y == 0:
-                        leftCoordinate = board[self.x][y]
-                        rightCoordinate = board[self.x][y+1] 
-                        topCoordinate = board[self.x][y]
-                        bottomCoordinate = board[self.x+1][y]
+                    if self.x == 0 and self.y == 0:
+                        leftCoordinate = board[self.x][self.y]
+                        rightCoordinate = board[self.x][self.y+1] 
+                        topCoordinate = board[self.x][self.y]
+                        bottomCoordinate = board[self.x+1][self.y]
                     
-                    elif self.x == 0 and y == 9:
-                        leftCoordinate = board[self.x][y-1]
-                        rightCoordinate = board[self.x][y]
-                        topCoordinate = board[self.x][y] 
-                        bottomCoordinate = board[self.x+1][y]
+                    elif self.x == 0 and self.y == 9:
+                        leftCoordinate = board[self.x][self.y-1]
+                        rightCoordinate = board[self.x][self.y]
+                        topCoordinate = board[self.x][self.y] 
+                        bottomCoordinate = board[self.x+1][self.y]
 
-                    elif self.x == 9 and y==0:
-                        leftCoordinate = board[self.x][y]
-                        rightCoordinate = board[self.x][y+1] 
-                        topCoordinate = board[self.x-1][y]
-                        bottomCoordinate = board[self.x][y]
+                    elif self.x == 9 and self.y==0:
+                        leftCoordinate = board[self.x][self.y]
+                        rightCoordinate = board[self.x][self.y+1] 
+                        topCoordinate = board[self.x-1][self.y]
+                        bottomCoordinate = board[self.x][self.y]
                     
                     #case 2: can't look left
-                    elif y == 0:
-                        leftCoordinate = board[self.x][y]
-                        rightCoordinate = board[self.x][y+1] 
-                        topCoordinate = board[self.x-1][y]
-                        bottomCoordinate = board[self.x+1][y]
+                    elif self.y == 0:
+                        leftCoordinate = board[self.x][self.y]
+                        rightCoordinate = board[self.x][self.y+1] 
+                        topCoordinate = board[self.x-1][self.y]
+                        bottomCoordinate = board[self.x+1][self.y]
 
                     #case 3: y = 0 (can't look above)
                     elif self.x == 0:
-                        leftCoordinate = board[self.x][y-1]
-                        rightCoordinate = board[self.x][y+1]
-                        topCoordinate = board[self.x][y] 
-                        bottomCoordinate = board[self.x+1][y]
+                        leftCoordinate = board[self.x][self.y-1]
+                        rightCoordinate = board[self.x][self.y+1]
+                        topCoordinate = board[self.x][self.y] 
+                        bottomCoordinate = board[self.x+1][self.y]
 
                     #Case 4: x & y = 9 (can't look right or beneath)
-                    elif self.x == 9 and y == 9:
-                        leftCoordinate = board[self.x][y-1]
-                        rightCoordinate = board[self.x][y]
-                        topCoordinate = board[self.x-1][y]
-                        bottomCoordinate = board[self.x][y]
+                    elif self.x == 9 and self.y == 9:
+                        leftCoordinate = board[self.x][self.y-1]
+                        rightCoordinate = board[self.x][self.y]
+                        topCoordinate = board[self.x-1][self.y]
+                        bottomCoordinate = board[self.x][self.y]
 
                     #Case 5: x = 9 (can't look right)
-                    elif y == 9:
-                        leftCoordinate = board[self.x][y-1]
-                        rightCoordinate = board[self.x][y]
-                        topCoordinate = board[self.x-1][y]
-                        bottomCoordinate = board[self.x+1][y]
+                    elif self.y == 9:
+                        leftCoordinate = board[self.x][self.y-1]
+                        rightCoordinate = board[self.x][self.y]
+                        topCoordinate = board[self.x-1][self.y]
+                        bottomCoordinate = board[self.x+1][self.y]
 
                     #Case 6: y = 9 (can't look beneath)
                     elif self.x == 9:
-                        leftCoordinate = board[self.x][y-1]
-                        rightCoordinate = board[self.x][y+1] 
-                        topCoordinate = board[self.x-1][y]
-                        bottomCoordinate = board[self.x][y]
+                        leftCoordinate = board[self.x][self.y-1]
+                        rightCoordinate = board[self.x][self.y+1] 
+                        topCoordinate = board[self.x-1][self.y]
+                        bottomCoordinate = board[self.x][self.y]
 
                     #Case 7: normal case
                     else:      
-                        leftCoordinate = board[self.x][y-1]
-                        rightCoordinate = board[self.x][y+1] 
-                        topCoordinate = board[self.x-1][y]
-                        bottomCoordinate = board[self.x+1][y]
-                    if y < 9:
-                        if cordEdges[self.x][y+1] < 2:
-                            # ^ originally an elif
+                        leftCoordinate = board[self.x][self.y-1]
+                        rightCoordinate = board[self.x][self.y+1] 
+                        topCoordinate = board[self.x-1][self.y]
+                        bottomCoordinate = board[self.x+1][self.y]
+                    #if columns less than 9, make a horizontal right move
+                    if self.y < 9:
+                        #see if number of edges is less than 2
+                        if cordEdges[self.x][self.y+1] < 4 and ((currCoordinate), (rightCoordinate)) not in self.listOfMoves:
+                            #if less than 2, good to go here
                             chosenMove = (currCoordinate), (rightCoordinate)
                             reverse = (rightCoordinate), (currCoordinate)
                             chosenMoveStr = str(chosenMove)
-                            #((0,0), (1,0))
                             chosenMoveNoP = chosenMoveStr.replace("(","")
                             chosenMoveNoP2 = chosenMoveNoP.replace(")","")
-                            #0, 0, 1, 0
-                            #0123456789
                             chosenMoveFirst = chosenMoveNoP2[0:3]
                             chosenMoveFirstFixed = chosenMoveFirst.replace(" ","")
                             chosenMoveSpace = chosenMoveNoP2[3:5]
@@ -615,79 +715,81 @@ class MandM:
                             chosenMoveReal = chosenMoveFirstFixed + chosenMoveSpaceFixed + chosenMoveSecondFixed
                             #Want to check the reverse as well since we are looking at edges
                             if chosenMove in self.listOfMoves or reverse in self.listOfMoves:
-                                if y == 9:
+                                if self.y == 9:
                                     self.x = self.x+1
                                     previousNumEdges = 4
                                     temp = self.x
-                                    y=0
-                                if y == 8 and self.x == 9:
-                                    y = 0
-                                    self.x = 0
+                                    self.y=0
                                 continue
-                            else:
-                                #Current chosen move
-                                #Also append the reverse of the move because we are checking edges
-                                self.listOfMoves.append(chosenMove)
-                                self.listOfMoves.append(reverse)
-                                #Opens file with all players moves
-                                #Checks if a box was closed, if so then the player passes
+                            #case where the chosen move or the reverse are not in the list of moves
+                            else:                                
+                                #If pass file exists, send message to signal the player is passing
                                 if os.path.exists('./Megan.pass'):
+                                    time.sleep(.1)
                                     File_object = open("move_file", "w")
                                     File_object.write("Megan 0,0 0,0")
                                     File_object.close()
                                     time.sleep(.1)
-                                #Checks if a box was closed, if so then the player passes
+                                #If a pass file exists, send message to signal the player is passing
                                 elif os.path.exists('./Michael.pass'):
+                                    time.sleep(.1)
                                     File_object = open("move_file", "w")
                                     File_object.write("Michael 0,0 0,0")
                                     File_object.close()
                                     time.sleep(.1)
-                                #Writes in selected move from decideMove() if it is player's turn
+                                #If go file exists, write to move file
                                 elif os.path.exists('./Megan.go'):
                                     time.sleep(.1)
+                                    self.listOfMoves.append(chosenMove)
+                                    self.listOfMoves.append(reverse)
                                     print(chosenMoveReal)
                                     File_object = open("move_file", "w")
                                     File_object.write("Megan " +chosenMoveReal)
                                     File_object.close()
                                     time.sleep(.1)
-                                #Writes in selected move from decideMove() if it is player's turn
+                                    #Add 1 to number of edges at those nodes
+                                    cordEdges[self.x][self.y] = cordEdges[self.x][self.y] + 1
+                                    #add an edge to the neighboring coordinate
+                                    cordEdges[self.x][self.y+1] = cordEdges[self.x][self.y+1] + 1
+                                    prevNumEdges = numEdges
+                                    #If go file exists, write to move file
                                 elif os.path.exists('./Michael.go'):
                                     time.sleep(.1)
+                                    self.listOfMoves.append(chosenMove)
+                                    self.listOfMoves.append(reverse)
                                     print(chosenMoveReal)
                                     File_object = open("move_file", "w")
                                     File_object.write("Michael " +chosenMoveReal)
                                     File_object.close()
                                     time.sleep(.1)
-                                #Closes file until next turn
-                                #Add 1 to number of edges at those nodes
-                                cordEdges[self.x][y] = cordEdges[self.x][y] + 1
-                                cordEdges[self.x][y+1] = cordEdges[self.x][y+1] + 1
-                                prevNumEdges = numEdges
-                                self.n = 0
-                                if y==9:
+                                    #Add 1 to number of edges at those nodes
+                                    cordEdges[self.x][self.y] = cordEdges[self.x][self.y] + 1
+                                    #add an edge to the neighboring coordinate
+                                    cordEdges[self.x][self.y+1] = cordEdges[self.x][self.y+1] + 1
+                                    prevNumEdges = numEdges
+                                if self.y==9:
                                     self.x=self.x+1
                                     previousNumEdges = 4
                                     temp = self.x
-                                    y=0
-                                if y == 8 and self.x == 9:
-                                    y = 0
-                                    self.x = 0
+                                    self.y=0
+                                self.n = 0
+                                #If at last column, increment row by 1
+                                
                                 test = MandM()
                                 break
 
                     #Want to check if there are less than two edges at the node next to the choice
                     #Break ties: pick from left to right then up to down
-                    if y > 0:
-                        if cordEdges[self.x][y-1] < 2:
+                    #If columns are greater than zero
+                    if self.y > 0:
+                        #If there are less than two edges at that coordinate, make horizontal left move
+                        if cordEdges[self.x][self.y-1] < 4 and ((currCoordinate), (leftCoordinate)) not in self.listOfMoves:
                             #Current chosen move
                             chosenMove = (currCoordinate), (leftCoordinate)
                             reverse = (leftCoordinate), (currCoordinate)
                             chosenMoveStr = str(chosenMove)
-                            #((0,0), (1,0))
                             chosenMoveNoP = chosenMoveStr.replace("(","")
                             chosenMoveNoP2 = chosenMoveNoP.replace(")","")
-                            #0, 0, 1, 0
-                            #0123456789
                             chosenMoveFirst = chosenMoveNoP2[0:3]
                             chosenMoveFirstFixed = chosenMoveFirst.replace(" ","")
                             chosenMoveSpace = chosenMoveNoP2[3:5]
@@ -695,20 +797,23 @@ class MandM:
                             chosenMoveSecond = chosenMoveNoP2[5:10]
                             chosenMoveSecondFixed = chosenMoveSecond.replace(" ","")
                             chosenMoveReal = chosenMoveFirstFixed + chosenMoveSpaceFixed + chosenMoveSecondFixed
+                            #If the chosen move is in the list of moves
                             if chosenMove in self.listOfMoves:
-                                if y == 9:
+                                #If at last column, increment rows by 1 and reset columns to zero
+                                if self.y == 9:
                                     self.x = self.x+1
                                     previousNumEdges = 4
                                     temp = self.x
-                                    y=0
-                                if y == 8 and self.x == 9:
-                                    y = 0
+                                    self.y=0
+                                #If the last vertical is in the list of moves, reset everything
+                                if (((8,9), (9,9)) in self.listOfMoves
+                                    or ((9,8), (9,9)) in self.listOfMoves):
+                                    self.y = 0
                                     self.x = 0
                                 continue
                             else:
                                 #Current chosen move
-                                self.listOfMoves.append(chosenMove)
-                                self.listOfMoves.append(reverse)
+                                
                                 #Opens file with all players moves
                                 #Checks if a box was closed, if so then the player passes
                                 if os.path.exists('./Megan.pass'):
@@ -725,35 +830,44 @@ class MandM:
                                 #Writes in selected move from decideMove() if it is player's turn
                                 elif os.path.exists('./Megan.go'):
                                     print(chosenMoveReal)
+                                    self.listOfMoves.append(chosenMove)
+                                    self.listOfMoves.append(reverse)
                                     File_object = open("move_file", "w")
                                     File_object.write("Megan " +chosenMoveReal)
                                     File_object.close()
                                     time.sleep(.1)
+                                    #Add 1 to number of edges at those nodes
+                                    cordEdges[self.x][self.y] = cordEdges[self.x][self.y] + 1
+                                    #add an edge to the neighboring coordinate
+                                    cordEdges[self.x][self.y-1] = cordEdges[self.x][self.y-1] + 1
+                                    prevNumEdges = numEdges
                                 #Writes in selected move from decideMove() if it is player's turn
                                 elif os.path.exists('./Michael.go'):
                                     print(chosenMoveReal)
+                                    self.listOfMoves.append(chosenMove)
+                                    self.listOfMoves.append(reverse)
                                     File_object = open("move_file", "w")
                                     File_object.write("Michael " +chosenMoveReal)
                                     File_object.close()
                                     time.sleep(.1)
+                                    #Add 1 to number of edges at those nodes
+                                    cordEdges[self.x][self.y] = cordEdges[self.x][self.y] + 1
+                                    #add an edge to the neighboring coordinate
+                                    cordEdges[self.x][self.y-1] = cordEdges[self.x][self.y-1] + 1
+                                    prevNumEdges = numEdges
+                                if self.y==9:
+                                    self.x=self.x+1
+                                    previousNumEdges = 4
+                                    temp = self.x
+                                    self.y=0
                                 #Closes file until next turn
-                            #Add 1 to number of edges at those nodes
-                            cordEdges[self.x][y] = cordEdges[self.x][y] + 1
-                            cordEdges[self.x][y-1] = cordEdges[self.x][y-1] + 1
-                            prevNumEdges = numEdges
-                            self.n = 0
-                            if y==9:
-                                self.x=self.x+1
-                                previousNumEdges = 4
-                                y=0
-                            if y == 8 and self.x == 9:
-                                y = 0
-                                self.x = 0
+                            
+                            
                             test = MandM()
                             break
                     
                     if self.x > 0:
-                        if cordEdges[self.x-1][y] < 2:
+                        if cordEdges[self.x-1][self.y] < 4 and ((currCoordinate), (topCoordinate)) not in self.listOfMoves:
                             #Current chosen move
                             chosenMove = (currCoordinate), (topCoordinate)
                             reverse = (topCoordinate), (currCoordinate)
@@ -771,19 +885,15 @@ class MandM:
                             chosenMoveSecondFixed = chosenMoveSecond.replace(" ","")
                             chosenMoveReal = chosenMoveFirstFixed + chosenMoveSpaceFixed + chosenMoveSecondFixed
                             if chosenMove in self.listOfMoves or reverse in self.listOfMoves:
-                                if y == 9:
+                                if self.y == 9:
                                     self.x = self.x+1
                                     previousNumEdges = 4
                                     temp = self.x
-                                    y=0
-                                if y == 8 and self.x == 9:
-                                    y = 0
-                                    self.x = 0
+                                    self.y=0
                                 continue
                             else:
                                 #Current chosen move
-                                self.listOfMoves.append(chosenMove)
-                                self.listOfMoves.append(tuple(reverse))
+                                
                                 #Opens file with all players moves
                                 #Checks if a box was closed, if so then the player passes
                                 if os.path.exists('./Megan.pass'):
@@ -799,46 +909,52 @@ class MandM:
                                     time.sleep(.1)
                                 #Writes in selected move from decideMove() if it is player's turn
                                 elif os.path.exists('./Megan.go'):
+                                    self.listOfMoves.append(chosenMove)
+                                    self.listOfMoves.append(reverse)
                                     print(chosenMoveReal)
                                     File_object = open("move_file", "w")
                                     File_object.write("Megan " +chosenMoveReal)
                                     File_object.close()
                                     time.sleep(.1)
+                                    #Add 1 to number of edges at those nodes
+                                    cordEdges[self.x-1][self.y] = cordEdges[self.x-1][self.y] + 1
+                                    #add an edge to the neighboring coordinate
+                                    cordEdges[self.x][self.y] = cordEdges[self.x][self.y] + 1
+                                    prevNumEdges = numEdges
                                 #Writes in selected move from decideMove() if it is player's turn
                                 elif os.path.exists('./Michael.go'):
+                                    self.listOfMoves.append(chosenMove)
+                                    self.listOfMoves.append(reverse)
                                     print(chosenMoveReal)
                                     File_object = open("move_file", "w")
                                     File_object.write("Michael " +chosenMoveReal)
                                     File_object.close()
                                     time.sleep(.1)
+                                    #Add 1 to number of edges at those nodes
+                                    cordEdges[self.x][self.y] = cordEdges[self.x][self.y] + 1
+                                    #add an edge to the neighboring coordinate
+                                    cordEdges[self.x-1][self.y] = cordEdges[self.x-1][self.y] + 1
+                                    prevNumEdges = numEdges
+                                if self.y==9:
+                                    self.x=self.x+1
+                                    previousNumEdges = 4
+                                    temp = self.x
+                                    self.y=0
                                 #Closes file until next turn
-                            #Add 1 to number of edges at those nodes
-                            cordEdges[self.x][y] = cordEdges[self.x][y] + 1
-                            cordEdges[self.x-1][y] = cordEdges[self.x-1][y] + 1
-                            prevNumEdges = numEdges
+                            
                             self.n = 0
-                            if y==9:
-                                self.x=self.x+1
-                                previousNumEdges = 4
-                                temp = self.x
-                                y=0
-                            if y == 8 and self.x == 9:
-                                y = 0
-                                self.x = 0
+                            
                             test = MandM()
                             break
 
                     if self.x < 9:    
-                        if cordEdges[self.x][y] < 2:
+                        if cordEdges[self.x+1][self.y] < 4 and ((currCoordinate), (bottomCoordinate)) not in self.listOfMoves:
                             #Current chosen move
                             chosenMove = (currCoordinate), (bottomCoordinate)
                             reverse = (bottomCoordinate), (currCoordinate)
                             chosenMoveStr = str(chosenMove)
-                            #((0,0), (1,0))
                             chosenMoveNoP = chosenMoveStr.replace("(","")
                             chosenMoveNoP2 = chosenMoveNoP.replace(")","")
-                            #0, 0, 1, 0
-                            #0123456789
                             chosenMoveFirst = chosenMoveNoP2[0:3]
                             chosenMoveFirstFixed = chosenMoveFirst.replace(" ","")
                             chosenMoveSpace = chosenMoveNoP2[3:5]
@@ -847,19 +963,15 @@ class MandM:
                             chosenMoveSecondFixed = chosenMoveSecond.replace(" ","")
                             chosenMoveReal = chosenMoveFirstFixed + chosenMoveSpaceFixed + chosenMoveSecondFixed
                             if chosenMove in self.listOfMoves or reverse in self.listOfMoves:
-                                if y == 9:
+                                if self.y == 9:
                                     self.x = self.x+1
                                     previousNumEdges = 4
                                     temp = self.x
-                                    y=0
-                                if y == 8 and self.x == 9:
-                                    y = 0
-                                    self.x = 0
+                                    self.y=0
                                 continue
                             else:
                                 #Current chosen move
-                                self.listOfMoves.append(chosenMove)
-                                self.listOfMoves.append(tuple(reverse))
+                 
                                 #Opens file with all players moves
                                 #Checks if a box was closed, if so then the player passes
                                 if os.path.exists('./Megan.pass'):
@@ -875,56 +987,60 @@ class MandM:
                                     time.sleep(.1)
                                 #Writes in selected move from decideMove() if it is player's turn
                                 elif os.path.exists('./Megan.go'):
+                                    self.listOfMoves.append(chosenMove)
+                                    self.listOfMoves.append(reverse)
                                     print(chosenMoveReal)
                                     File_object = open("move_file", "w")
                                     File_object.write("Megan " +chosenMoveReal)
                                     File_object.close()
                                     time.sleep(.1)
+                                    #Add 1 to number of edges at those nodes
+                                    cordEdges[self.x][self.y] = cordEdges[self.x][self.y] + 1
+                                    #add an edge to the neighboring coordinate
+                                    cordEdges[self.x+1][self.y] = cordEdges[self.x+1][self.y] + 1
+                                    prevNumEdges = numEdges
                                 #Writes in selected move from decideMove() if it is player's turn
                                 elif os.path.exists('./Michael.go'):
+                                    self.listOfMoves.append(chosenMove)
+                                    self.listOfMoves.append(reverse)
                                     print(chosenMoveReal)
                                     File_object = open("move_file", "w")
                                     File_object.write("Michael " +chosenMoveReal)
                                     File_object.close()
                                     time.sleep(.1)
+                                    #Add 1 to number of edges at those nodes
+                                    cordEdges[self.x][self.y] = cordEdges[self.x][self.y] + 1
+                                    #add an edge to the neighboring coordinate
+                                    cordEdges[self.x+1][self.y] = cordEdges[self.x+1][self.y] + 1
+                                    prevNumEdges = numEdges
+                                if self.y==9:
+                                    self.x=self.x+1
+                                    previousNumEdges = 4
+                                    temp = self.x
+                                    self.y=0
                                 #Closes file until next turn
                             #Add 1 to number of edges at those nodes
-                            cordEdges[self.x][y] = cordEdges[self.x][y] + 1
-                            cordEdges[self.x+1][y] = cordEdges[self.x+1][y] + 1
-                            prevNumEdges = numEdges
+                            
                             self.n = 0
-                            if y==9:
-                                self.x=self.x+1
-                                previousNumEdges = 4
-                                temp = self.x
-                                y=0
-                            if y == 8 and self.x == 9:
-                                y = 0
-                                self.x = 0
+                            
                             test = MandM()
                             break
                     
                     #case where we don't want to go here: go back to start of nested for loop
                     else:
                         prevNumEdges = numEdges
-                        if y == 9:
+                        if self.y == 9:
                             self.x = self.x+1
                             previousNumEdges = 4
                             temp = self.x
-                            y=0
-                        if y == 8 and self.x == 9:
-                            y = 0
-                            self.x = 0
+                            self.y=0
                 #Case where box already exists here
                 else:
-                    if y == 9:
+                    if self.y == 9:
                         self.x = self.x+1
                         previousNumEdges = 4
                         temp = self.x
-                        y=0
-                    if y == 8 and self.x == 9:
-                        y = 0
-                        self.x = 0
+                        self.y=0
                     continue
 
         #Once one node has 2 lines branching off it:
